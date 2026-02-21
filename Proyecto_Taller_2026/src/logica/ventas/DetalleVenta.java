@@ -3,10 +3,10 @@ package logica.ventas;
 import logica.postres.*;
 
 public class DetalleVenta {
-	
+
 	private int cantidad;
 	private Postre postre;
-	
+
 	public DetalleVenta(int cant, Postre pos) {
 		setCantidad(cant);
 		postre = pos;
@@ -23,7 +23,5 @@ public class DetalleVenta {
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
-	
-	
-	
+
 }

@@ -1,25 +1,21 @@
-package logica.ventas;
+package value_objects;
 
 import java.time.LocalDate;
 
-public class Venta {
-
+public class VO_VentaCompleto extends VO_VentaBasico {
 	private int numero;
-	private LocalDate fecha;
-	private String direccion;
 	private boolean enProceso;
 	private double monto;
+	
+	public VO_VentaCompleto(LocalDate fe, String dire, int num, boolean enProc, double mont) {
+		super(fe,dire);
+		numero = num;
+		enProceso = enProc;
+		monto = mont;
+	}
 
 	public int getNumero() {
 		return numero;
-	}
-
-	public LocalDate getFecha() {
-		return fecha;
-	}
-
-	public String getDireccion() {
-		return direccion;
 	}
 
 	public boolean getEnProceso() {
@@ -29,4 +25,7 @@ public class Venta {
 	public double getMonto() {
 		return monto;
 	}
+	
+	
+
 }

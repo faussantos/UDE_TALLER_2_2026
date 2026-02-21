@@ -1,12 +1,11 @@
-package logica.postres;
+package value_objects;
 
-public class Postre {
-
+public class VO_Postre {
 	private String codigo;
 	private String nombre;
 	private double precio;
 
-	public Postre(String cod, String nom, double pre) {
+	public VO_Postre(String cod, String nom, double pre) {
 		codigo = cod;
 		nombre = nom;
 		precio = pre;
