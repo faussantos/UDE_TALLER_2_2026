@@ -1,8 +1,10 @@
 package logica.ventas;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.*;
+
+import logica.postres.Postre;
+import value_objects.*;
 
 public class Venta {
 
@@ -13,6 +15,15 @@ public class Venta {
 	private double monto;
 	private ArrayList<DetalleVenta> detalles;
 
+	public Venta(int num, LocalDate fech, String dir, boolean enProc, double mont) {
+		numero = num;
+		fecha = fech;
+		direccion = dir;
+		enProceso = enProc;
+		monto = mont;
+		detalles = new ArrayList<>();
+	}
+	
 	public int getNumero() {
 		return numero;
 	}
@@ -58,7 +69,57 @@ public class Venta {
 				break;
 			}
 		}
-
 		return existe;
 	}
+	
+	public int getTotalUnidades() {
+		int total = 0;
+		for(DetalleVenta det: detalles) {
+			total = total + det.getCantidad();
+		}
+		return total;
+	}
+	
+	public void setNumero(int num) {
+		numero = num;
+	}
+	
+	public void setEnProceso (boolean enProc) {
+		enProceso = enProc;
+	}
+	
+	public void ModificarDetalleLista(DetalleVenta det) {
+		int index = detalles.indexOf(det);
+		if(index != -1)
+			detalles.set(index, det);
+	}
+	
+	public void InsertarDetalle(DetalleVenta det) {
+		detalles.add(det);
+	}
+	
+	public void BorrarDetalle(String cod) {
+		for(DetalleVenta det: detalles) {
+			if(det.getPostre().getCodigo().equals(cod)) {
+				detalles.remove(det);
+				break;
+			}
+		}
+	}
+	
+	public boolean DetallesEmpty () {
+		return (detalles.isEmpty());
+	}
+	
+	public VO_Postre[] ListarPostres() {
+		VO_Postre[] arre = new VO_Postre[detalles.size()];
+		int i = 0;
+		for(DetalleVenta detalle : detalles) {
+			Postre p = detalle.getPostre();
+			arre[i] = new VO_Postre(p.getCodigo(), p.getNombre(), p.getPrecio());
+			i++;
+		}
+		return arre;
+	}
+
 }
