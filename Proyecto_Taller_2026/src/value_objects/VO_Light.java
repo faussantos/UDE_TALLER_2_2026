@@ -1,8 +1,8 @@
 package value_objects;
 
 public class VO_Light extends VO_Postre{
-	public String endulzante;
-	public String descripcion;
+	private String endulzante;
+	private String descripcion;
 
 	public VO_Light(String cod, String nom, double pre, String endul, String descr) {
 		super(cod, nom, pre);
