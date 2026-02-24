@@ -1,5 +1,7 @@
 package logica;
 
+import java.util.ArrayList;
+
 import logica.postres.*;
 import logica.ventas.*;
 import value_objects.*;
@@ -32,7 +34,12 @@ public class CapaLogica {
 		return dicPostres.ListarPostres();
 	}
 
-	public VO_Postre detallePostre() {
+	public VO_Postre detallePostre(VO_CodigoPostre codigoPostre) {
+		Postre postreBuscado = dicPostres.Find(codigoPostre.getCodigoPostre());
+		VO_Postre datosDevolver = new VO_Postre(postreBuscado.getCodigo(), postreBuscado.getNombre(),
+				postreBuscado.getPrecio());
+
+		return datosDevolver;
 	}
 
 	public void inicioVenta(VO_VentaBasico datosVenta) {
@@ -48,19 +55,21 @@ public class CapaLogica {
 	}
 
 	public VO_VentaCompleto[] listadoVentas() {
-		return secVentas.ListarVentas();
+		
+		return null;
 	}
 
-	public VO_PostreCantidad[] listadoPostresEnVenta(int num)  {
+	public VO_PostreCantidad[] listadoPostresEnVenta(int num) {
+		return null;
 	}
 
 	public VO_CantidadMonto totalMontoPostreYFecha(VO_PostreFecha datos) {
-	}
-	
-	public void respaldarDatos() {
-	}
-	
-	public void recuperarDatos() {}
+		return null;
 	}
 
+	public void respaldarDatos() {
+	}
+
+	public void recuperarDatos() {
+	}
 }
