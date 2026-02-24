@@ -15,8 +15,8 @@ public class Venta {
 	private double monto;
 	private ArrayList<DetalleVenta> detalles;
 
-	public Venta(int num, LocalDate fech, String dir, boolean enProc, double mont) {
-		numero = num;
+	public Venta(LocalDate fech, String dir, boolean enProc, double mont) {
+		numero = 0;
 		fecha = fech;
 		direccion = dir;
 		enProceso = enProc;
@@ -54,6 +54,7 @@ public class Venta {
 		for(DetalleVenta det: detalles) {
 			if(det.getPostre().getCodigo().equals(codigo)) {
 				detalleDevolver = det;
+				break;
 			}
 		}
 		
