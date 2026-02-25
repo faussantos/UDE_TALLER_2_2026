@@ -94,4 +94,9 @@ public class Ventas {
 		}
 		return arre;
 	}
+	
+	public void borrar(int numeroVenta) {
+		Venta ventaBorrar = this.Find(numeroVenta);
+		ventas.remove(ventas.indexOf(ventaBorrar));
+	}
 }

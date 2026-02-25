@@ -127,10 +127,53 @@ public class CapaLogica {
 		secVentas.Modify(ventaBuscada);
 	}
 
-	public void eliminarPostreEnVenta(VO_VentaBasico datosVenta) {
-	}
+	public void eliminarPostreEnVenta(VO_DetalleVenta datosDetalle) 
+			throws CantidadNegativaException, NoExisteNumeroVenta, NoExistePostreException, VentaNoEnProceso
+	{
+		
+		if (datosDetalle.getCantidad() <= 0) { 
+			throw new CantidadNegativaException("La cantidad ingresada debe ser mayor a 0");
+			}
+		
+		if (!secVentas.Member(datosDetalle.getNumeroVenta())) {
+			throw new NoExisteNumeroVenta("El codigo ingresado no corresponde a ninguna venta");
+			}
+		
+		Venta venta = secVentas.Find(datosDetalle.getNumeroVenta());
+		
+		if (!venta.getEnProceso()) {
+			throw new VentaNoEnProceso("La venta ya esta finalizada, no se pueden eliminar postres");
+			}
+		
+		if (!venta.ExisteDetalle(datosDetalle.getCodigoPostre())) 
+		{throw new NoExistePostreException ("El postre no existe en esta venta");
+			};
+		
+		DetalleVenta detalle = venta.getDetalle(datosDetalle.getCodigoPostre());
+		int cantidadActual = detalle.getCantidad();
+		int cantidadEliminar = datosDetalle.getCantidad();
+		
+		if (cantidadEliminar >= cantidadActual) 
+				venta.BorrarDetalle(detalle.getPostre().getCodigo());
+		else 
+				detalle.setCantidad(cantidadActual - cantidadEliminar);
+	
+		}
 
-	public void finalizarVenta(VO_FinalizarVenta datosFinalizarVenta) {
+	public void finalizarVenta(VO_FinalizarVenta datosFinalizarVenta) 
+			throws NoExisteNumeroVenta
+	{
+		
+		double monto = 0.0;
+		if(!secVentas.Member(datosFinalizarVenta.getNumero())) {
+			throw new NoExisteNumeroVenta("No existe venta registrada con el número ingresado");
+		}
+		
+		Venta ventaBuscada = secVentas.Find(datosFinalizarVenta.getNumero());
+		if(ventaBuscada.DetallesEmpty()|| !datosFinalizarVenta.getConfirma()){
+			secVentas.
+		}
+		
 	}
 
 	public VO_VentaCompleto[] listadoVentas() {
