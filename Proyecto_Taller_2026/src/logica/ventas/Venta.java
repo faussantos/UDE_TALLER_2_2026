@@ -123,5 +123,18 @@ public class Venta {
 		return arre;
 	}
 
-
+	public VO_CantidadMonto totalMontoPostreYFecha() {
+		return null;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+

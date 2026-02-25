@@ -1,5 +1,6 @@
 package logica;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -187,6 +188,9 @@ public class CapaLogica {
 	}
 
 	public VO_CantidadMonto totalMontoPostreYFecha(VO_PostreFecha datos) {
+		if(datos.getFecha().isBefore(datos.getFecha(LocalDate.now()))) {
+			
+		}
 		return null;
 	}
 
