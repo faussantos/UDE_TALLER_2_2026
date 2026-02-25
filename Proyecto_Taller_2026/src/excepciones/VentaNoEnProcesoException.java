@@ -1,11 +1,11 @@
 package excepciones;
 
-public class VentaNoEnProceso extends Exception {
+public class VentaNoEnProcesoException extends Exception {
 	
 	private String mensaje;
 	private static final long serialVersionUID = 1L;
 
-	public VentaNoEnProceso(String mensaje) {
+	public VentaNoEnProcesoException(String mensaje) {
 		this.mensaje = mensaje;
 	}
 	

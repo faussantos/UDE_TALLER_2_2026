@@ -112,15 +112,16 @@ public class Venta {
 		return (detalles.isEmpty());
 	}
 	
-	public VO_Postre[] ListarPostres() {
-		VO_Postre[] arre = new VO_Postre[detalles.size()];
+	public VO_PostreCantidad[] ListarPostres() {
+		VO_PostreCantidad[] arre = new VO_PostreCantidad[detalles.size()];
 		int i = 0;
 		for(DetalleVenta detalle : detalles) {
 			Postre p = detalle.getPostre();
-			arre[i] = new VO_Postre(p.getCodigo(), p.getNombre(), p.getPrecio());
+			arre[i] = new VO_PostreCantidad(p.getCodigo(), p.getNombre(), p.getPrecio(), detalle.getCantidad());
 			i++;
 		}
 		return arre;
 	}
+
 
 }

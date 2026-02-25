@@ -1,11 +1,10 @@
 package excepciones;
 
-public class NoExisteNumeroVentaException extends Exception {
-
+public class IndicacionInvalidaException extends Exception {
 	private String mensaje;
 	private static final long serialVersionUID = 1L;
 
-	public NoExisteNumeroVentaException(String mensaje) {
+	public IndicacionInvalidaException(String mensaje) {
 		this.mensaje = mensaje;
 	}
 	

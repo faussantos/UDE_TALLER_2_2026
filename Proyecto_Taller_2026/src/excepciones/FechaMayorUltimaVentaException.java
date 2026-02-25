@@ -1,11 +1,11 @@
 package excepciones;
 
-public class FechaMayorUltimaVenta extends Exception {
+public class FechaMayorUltimaVentaException extends Exception {
 
 	private String mensaje;
 	private static final long serialVersionUID = 1L;
 
-	public FechaMayorUltimaVenta(String mensaje) {
+	public FechaMayorUltimaVentaException(String mensaje) {
 		this.mensaje = mensaje;
 	}
 	
