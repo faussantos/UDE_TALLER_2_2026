@@ -2,7 +2,7 @@ package value_objects;
 
 import java.time.LocalDate;
 
-public class VO_PostreFecha {
+public class VO_PostreFecha extends ValueObject{
 	
 	private String codigo;
 	private LocalDate fecha;

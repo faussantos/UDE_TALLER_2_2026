@@ -99,4 +99,27 @@ public class Ventas {
 		Venta ventaBorrar = this.Find(numeroVenta);
 		ventas.remove(ventas.indexOf(ventaBorrar));
 	}
+	
+	public VO_CantidadMonto totalMontoPostreYFecha(VO_PostreFecha datos) {
+		int cantidad = 0;
+		double monto = 0;
+
+		if (!ventas.isEmpty()) {
+			for (Venta venta : ventas) {
+				if (venta.getFecha().isAfter(datos.getFecha())) {
+					break;
+				}
+
+				if (venta.ExisteDetalle(datos.getCodigo())) {
+					DetalleVenta detalleBuscado = venta.getDetalle(datos.getCodigo());
+					cantidad += detalleBuscado.getCantidad();
+					monto += detalleBuscado.getPostre().getPrecio();
+				}
+			}
+		}
+
+		VO_CantidadMonto cantidadMontoVO = new VO_CantidadMonto(cantidad, monto);
+
+		return cantidadMontoVO;
+	}
 }

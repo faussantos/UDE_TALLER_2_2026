@@ -1,6 +1,7 @@
 package value_objects;
 
-public class VO_FinalizarVenta  {
+public class VO_FinalizarVenta extends ValueObject {
+		
 	private int numero;
 	private boolean confirma;
 

@@ -1,10 +1,9 @@
 package excepciones;
 
-public class CantidadMayor40Exception extends Exception{
-	
+public class FechaMayorHoyException extends Exception {
 	private String mensaje;
-	
-	public CantidadMayor40Exception(String mensaje) {
+
+	public FechaMayorHoyException(String mensaje) {
 		this.mensaje = mensaje;
 	}
 	

@@ -1,6 +1,6 @@
 package value_objects;
 
-public class VO_Monto {
+public class VO_Monto extends ValueObject {
 	
 	private double monto;
 	

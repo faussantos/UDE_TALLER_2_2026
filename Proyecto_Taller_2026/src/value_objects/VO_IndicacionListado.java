@@ -1,6 +1,7 @@
 package value_objects;
 
-public class VO_IndicacionListado {
+public class VO_IndicacionListado extends ValueObject {
+	
 	private char indicacion;
 
 	public VO_IndicacionListado(char ind) {

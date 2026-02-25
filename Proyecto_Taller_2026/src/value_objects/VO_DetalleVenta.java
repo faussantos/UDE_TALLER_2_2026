@@ -1,6 +1,6 @@
 package value_objects;
 
-public class VO_DetalleVenta {
+public class VO_DetalleVenta extends ValueObject {
 	
 	private int cantidad;
 	private String codigoPostre;

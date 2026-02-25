@@ -1,7 +1,7 @@
 package value_objects;
 import java.time.LocalDate;
 
-public class VO_VentaBasico {
+public class VO_VentaBasico extends ValueObject{
 	private LocalDate fecha;
 	private String direccion;
 	

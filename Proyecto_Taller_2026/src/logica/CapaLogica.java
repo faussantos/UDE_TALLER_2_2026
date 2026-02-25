@@ -55,7 +55,8 @@ public class CapaLogica {
 		return datosDevolver;
 	}
 
-	public void inicioVenta(VO_VentaBasico datosVenta) throws FechaMayorUltimaVentaException {
+	public void inicioVenta(VO_VentaBasico datosVenta) 
+			throws FechaMayorUltimaVentaException {
 		// Revisar excepcion
 		Venta ultimaVenta = secVentas.getUltimaVenta();
 		if (ultimaVenta != null && ultimaVenta.getFecha().isBefore(datosVenta.getFecha())) {
@@ -103,8 +104,6 @@ public class CapaLogica {
 		if (ventaBuscada.ExisteDetalle(datosDetalle.getCodigoPostre())) {
 			DetalleVenta detalleBuscado = ventaBuscada.getDetalle(datosDetalle.getCodigoPostre());
 			detalleBuscado.setCantidad(detalleBuscado.getCantidad() + datosDetalle.getCantidad());
-			ventaBuscada.ModificarDetalleLista(detalleBuscado); // CONSULTAR SI CORRESPONDE USAR. set trabaja por
-																// referencia?
 		} else {
 			Postre ingresarPostre = dicPostres.Find(datosDetalle.getCodigoPostre());
 			DetalleVenta nuevoDetalle = new DetalleVenta(datosDetalle.getCantidad(), ingresarPostre);
@@ -187,11 +186,18 @@ public class CapaLogica {
 		return ventaBuscada.ListarPostres();
 	}
 
-	public VO_CantidadMonto totalMontoPostreYFecha(VO_PostreFecha datos) {
-		if(datos.getFecha().isBefore(datos.getFecha(LocalDate.now()))) {
-			
+	public VO_CantidadMonto totalMontoPostreYFecha(VO_PostreFecha datos)
+			throws FechaMayorHoyException, NoExistePostreException {
+
+		if (!dicPostres.Member(datos.getCodigo())) {
+			throw new NoExistePostreException("El código ingresado no está registrado para ningún postre");
 		}
-		return null;
+
+		if (datos.getFecha().isAfter(LocalDate.now())) {
+			throw new FechaMayorHoyException("La fecha ingresada no puede ser mayor a hoy");
+		}
+
+		return secVentas.totalMontoPostreYFecha(datos);
 	}
 
 	public void respaldarDatos() {

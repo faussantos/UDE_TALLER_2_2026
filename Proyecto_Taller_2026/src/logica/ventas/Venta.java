@@ -126,6 +126,8 @@ public class Venta {
 	public VO_CantidadMonto totalMontoPostreYFecha() {
 		return null;
 	}
+	
+	
 }
 
 
