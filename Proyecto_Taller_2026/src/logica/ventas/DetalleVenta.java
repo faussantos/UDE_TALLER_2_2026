@@ -1,9 +1,12 @@
 package logica.ventas;
 
+import java.io.Serializable;
+
 import logica.postres.*;
 
-public class DetalleVenta {
-
+public class DetalleVenta implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	private int cantidad;
 	private Postre postre;
 

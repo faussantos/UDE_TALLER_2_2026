@@ -1,13 +1,15 @@
 package logica.ventas;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
 import logica.postres.Postre;
 import value_objects.*;
 
-public class Venta {
-
+public class Venta implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	private int numero;
 	private LocalDate fecha;
 	private String direccion;

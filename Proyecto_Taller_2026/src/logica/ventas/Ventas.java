@@ -1,11 +1,13 @@
 package logica.ventas;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
-import logica.postres.Postre;
 import value_objects.*;
 
-public class Ventas {
+public class Ventas implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	private LinkedList<Venta> ventas;
 
 	public Ventas() {
@@ -66,7 +68,11 @@ public class Ventas {
 	}
 
 	public Venta getUltimaVenta() {
-		return ventas.getLast();
+		Venta ventaDevolver = null;
+		if (!ventas.isEmpty()) {
+			ventaDevolver = ventas.getLast();
+		}
+		return ventaDevolver;
 	}
 
 	public VO_VentaCompleto[] ListarVentasEnProceso() {
@@ -94,12 +100,12 @@ public class Ventas {
 		}
 		return arre;
 	}
-	
+
 	public void borrar(int numeroVenta) {
 		Venta ventaBorrar = this.Find(numeroVenta);
 		ventas.remove(ventas.indexOf(ventaBorrar));
 	}
-	
+
 	public VO_CantidadMonto totalMontoPostreYFecha(VO_PostreFecha datos) {
 		int cantidad = 0;
 		double monto = 0;

@@ -1,11 +1,11 @@
 package logica;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Set;
 
 import logica.postres.*;
 import logica.ventas.*;
+import persistencia.Persistencia;
 import value_objects.*;
 import excepciones.*;
 
@@ -14,9 +14,12 @@ public class CapaLogica {
 	private Ventas secVentas;
 	private Postres dicPostres;
 
+	private Persistencia persistencia;
+
 	public CapaLogica() {
 		secVentas = new Ventas();
 		dicPostres = new Postres();
+		persistencia = new Persistencia();
 	}
 
 	public void AltaPostre(VO_Postre datosPostre) throws ExistePostreException {
@@ -28,7 +31,7 @@ public class CapaLogica {
 			throw new ExistePostreException(msg);
 		}
 
-		if (datosPostre.getTipo().equals("Light")) /* Comparar strings o instanceof */ {
+		if (datosPostre instanceof VO_Light) /* Comparar strings o instanceof */ {
 			VO_Light datosLight = (VO_Light) datosPostre;
 			postre = new Light(datosLight.getCodigo(), datosLight.getNombre(), datosLight.getPrecio(),
 					datosLight.getEndulzante(), datosLight.getDescripcion());
@@ -49,14 +52,22 @@ public class CapaLogica {
 			throw new NoExistePostreException("El código ingresado no está registrado para ningún postre");
 		}
 		Postre postreBuscado = dicPostres.Find(codigoPostre.getCodigoPostre());
-		VO_Postre datosDevolver = new VO_Postre(postreBuscado.getCodigo(), postreBuscado.getNombre(),
-				postreBuscado.getPrecio());
+
+		VO_Postre datosDevolver = null;
+		if (postreBuscado instanceof Light) {
+			datosDevolver = new VO_Light(postreBuscado.getCodigo(), postreBuscado.getNombre(),
+					postreBuscado.getPrecio(), ((Light) postreBuscado).getEndulzante(),
+					((Light) postreBuscado).getDescripcion());
+		} else {
+
+			datosDevolver = new VO_Postre(postreBuscado.getCodigo(), postreBuscado.getNombre(),
+					postreBuscado.getPrecio());
+		}
 
 		return datosDevolver;
 	}
 
-	public void inicioVenta(VO_VentaBasico datosVenta) 
-			throws FechaMayorUltimaVentaException {
+	public void inicioVenta(VO_VentaBasico datosVenta) throws FechaMayorUltimaVentaException {
 		// Revisar excepcion
 		Venta ultimaVenta = secVentas.getUltimaVenta();
 		if (ultimaVenta != null && ultimaVenta.getFecha().isBefore(datosVenta.getFecha())) {
@@ -146,7 +157,8 @@ public class CapaLogica {
 
 	}
 
-	public void finalizarVenta(VO_FinalizarVenta datosFinalizarVenta) throws NoExisteNumeroVentaException {
+	public VO_ConfirmacionVentaFinalizada finalizarVenta(VO_FinalizarVenta datosFinalizarVenta)
+			throws NoExisteNumeroVentaException {
 
 		double monto = 0.0;
 		if (!secVentas.Member(datosFinalizarVenta.getNumero())) {
@@ -155,9 +167,13 @@ public class CapaLogica {
 
 		Venta ventaBuscada = secVentas.Find(datosFinalizarVenta.getNumero());
 		if (ventaBuscada.DetallesEmpty() || !datosFinalizarVenta.getConfirma()) {
-			// secVentas.
+			secVentas.borrar(datosFinalizarVenta.getNumero());
+		} else if (datosFinalizarVenta.getConfirma()) {
+			ventaBuscada.setEnProceso(false);
+			monto = ventaBuscada.getMonto();
 		}
 
+		return new VO_ConfirmacionVentaFinalizada(monto, datosFinalizarVenta.getConfirma());
 	}
 
 	public VO_VentaCompleto[] listadoVentas(VO_IndicacionListado datosIndicacion) throws IndicacionInvalidaException {
@@ -166,7 +182,7 @@ public class CapaLogica {
 		if (!indicacionesValidas.contains(datosIndicacion.getIndicacion())) {
 			throw new IndicacionInvalidaException("El caracter ingresado no corresponde con ninguna indicacion");
 		}
-		
+
 		if (datosIndicacion.getIndicacion() == 'T')
 			return secVentas.ListarVentas();
 		else if (datosIndicacion.getIndicacion() == 'P')
@@ -180,8 +196,8 @@ public class CapaLogica {
 
 		if (!secVentas.Member(datosNumeroVenta.getNumero())) {
 			throw new NoExisteNumeroVentaException("No existe venta registrada con el número ingresado");
-		} 
-		
+		}
+
 		Venta ventaBuscada = secVentas.Find(datosNumeroVenta.getNumero());
 		return ventaBuscada.ListarPostres();
 	}
@@ -200,9 +216,15 @@ public class CapaLogica {
 		return secVentas.totalMontoPostreYFecha(datos);
 	}
 
-	public void respaldarDatos() {
+	public void respaldarDatos() throws PersistenciaException {
+		VO_Persistencia datosRespaldar = new VO_Persistencia(dicPostres, secVentas);
+		persistencia.respaldar("datos.dat", datosRespaldar);
 	}
 
-	public void recuperarDatos() {
+	public void recuperarDatos() throws ClassNotFoundException, PersistenciaException {
+		VO_Persistencia datosRecuperados = persistencia.recuperar("datos.dat");
+
+		dicPostres = datosRecuperados.getPostres();
+		secVentas = datosRecuperados.getVentas();
 	}
 }

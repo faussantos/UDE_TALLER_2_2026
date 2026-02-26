@@ -7,6 +7,11 @@ public class VO_Persistencia extends ValueObject{
 	private Postres postres;
 	private Ventas ventas;
 	
+	public VO_Persistencia(Postres pos, Ventas ven) {
+		postres = pos;
+		ventas = ven;
+	}
+	
 	public Postres getPostres() {
 		return postres;
 	}
