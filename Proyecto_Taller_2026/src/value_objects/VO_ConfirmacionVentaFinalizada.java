@@ -1,6 +1,6 @@
 package value_objects;
 
-public class VO_ConfirmacionVentaFinalizada {
+public class VO_ConfirmacionVentaFinalizada extends ValueObject {
 	private double monto;
 	private boolean confirmada;
 

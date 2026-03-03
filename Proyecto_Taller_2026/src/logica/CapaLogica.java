@@ -3,13 +3,16 @@ package logica;
 import java.time.LocalDate;
 import java.util.Set;
 
+import java.rmi.server.UnicastRemoteObject;
+import java.rmi.RemoteException;
+
 import logica.postres.*;
 import logica.ventas.*;
 import persistencia.Persistencia;
 import value_objects.*;
 import excepciones.*;
 
-public class CapaLogica {
+public class CapaLogica extends UnicastRemoteObject implements ICapaLogica{
 
 	private static CapaLogica instancia;
 	
@@ -18,14 +21,14 @@ public class CapaLogica {
 	private Monitor monitor;
 	private Persistencia persistencia;
 
-	private CapaLogica() {
+	private CapaLogica() throws RemoteException {
 		secVentas = new Ventas();
 		dicPostres = new Postres();
 		persistencia = new Persistencia();
 		monitor = new Monitor();
 	}
 
-	public static CapaLogica getInstancia() {
+	public static CapaLogica getInstancia() throws RemoteException {
 		
 		if(instancia == null)
 			instancia = new CapaLogica();

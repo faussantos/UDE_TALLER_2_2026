@@ -1,23 +1,32 @@
 package grafica;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.time.LocalDate;
+import java.util.Properties;
 
-import logica.*;
+import logica.ICapaLogica;
 import value_objects.*;
 
 public class Grafica {
 
 	public static void main(String args[]) {
 
-		CapaLogica cp = CapaLogica.getInstancia(); 
-
 		try {
+			Properties p = new Properties();
+			p.load (new FileInputStream ("config/config.properties"));
+			String ip = p.getProperty("ipServidor");
+			String puerto = p.getProperty("puertoServidor");
+			ICapaLogica cp = (ICapaLogica) Naming.lookup("//" + ip + ":" + puerto + "/CapaLogica");
 
 			// req 1 AltaPostre
 			System.out.println("REQUERIMIENTO 1");
 			VO_Postre datosPostre = new VO_Postre("123", "Bola de fraile", 50);
 			cp.AltaPostre(datosPostre);
-
 			VO_Light datosPostreLight = new VO_Light("321", "Bola de fraile pero light", 300, "stevia", "un asco");
 			cp.AltaPostre(datosPostreLight);
 
@@ -25,15 +34,14 @@ public class Grafica {
 			System.out.println("REQUERIMIENTO 2");
 			VO_Postre[] postresListados = cp.ListadoPostres();
 			for (VO_Postre vo_Postre : postresListados) {
-				System.out.println(vo_Postre.getCodigo() + " | " + vo_Postre.getNombre() + " | " + vo_Postre.getPrecio()
-						+ " | " + vo_Postre.getTipo());
+				System.out.println(vo_Postre.getCodigo() + " | " + vo_Postre.getNombre() + " | "
+						+ vo_Postre.getPrecio() + " | " + vo_Postre.getTipo());
 			}
 
 			// req 3 detallePostre
 			System.out.println("REQUERIMIENTO 3");
 			VO_CodigoPostre voCodigoPostre = new VO_CodigoPostre("321");
 			VO_Postre detallePostre = cp.detallePostre(voCodigoPostre);
-
 			if (detallePostre instanceof VO_Light) {
 				System.out.println(detallePostre.getCodigo() + " | " + detallePostre.getNombre() + " | "
 						+ detallePostre.getPrecio() + " | " + detallePostre.getTipo() + " | "
@@ -48,7 +56,6 @@ public class Grafica {
 			System.out.println("REQUERIMIENTO 4");
 			LocalDate ld = LocalDate.of(2025, 2, 25);
 			VO_VentaBasico datosVenta = new VO_VentaBasico(ld, "mi casa");
-
 			cp.inicioVenta(datosVenta);
 
 			// req 5 agregarPostreEnVenta
@@ -71,7 +78,6 @@ public class Grafica {
 			System.out.println("REQUERIMIENTO 8");
 			VO_IndicacionListado indicacion = new VO_IndicacionListado('T');
 			VO_VentaCompleto[] listadoVentas = cp.listadoVentas(indicacion);
-
 			for (VO_VentaCompleto ven : listadoVentas) {
 				System.out.println(ven.getFecha() + " | " + ven.getDireccion() + " | " + ven.getNumero() + " | "
 						+ ven.getEnProceso() + " | " + ven.getMonto());
@@ -81,7 +87,6 @@ public class Grafica {
 			System.out.println("REQUERIMIENTO 9");
 			VO_NumeroVenta num = new VO_NumeroVenta(1);
 			VO_PostreCantidad[] listado = cp.listadoPostresEnVenta(num);
-
 			for (VO_PostreCantidad pos : listado) {
 				System.out.println(pos.getCodigo() + " | " + pos.getNombre() + " | " + pos.getPrecio() + " | "
 						+ pos.getTipo() + " | " + pos.getCantidad());
@@ -93,16 +98,24 @@ public class Grafica {
 			VO_CantidadMonto cantidadMonto = cp.totalMontoPostreYFecha(datosPostreFecha);
 			System.out.println("cantidad: " + cantidadMonto.getCantidad());
 			System.out.println("monto: " + cantidadMonto.getMonto());
-			
+
 			// req 11 respaldarDatos
 			System.out.println("REQUERIMIENTO 11");
 			cp.respaldarDatos();
-			
+
 			// req 12 recuperarDatos
 			System.out.println("REQUERIMIENTO 12");
 			cp.recuperarDatos();
-			
-		} catch (Exception e) {
+
+		} catch (MalformedURLException e) {
+			System.out.println("URL mal formada: " + e.getMessage());
+		} catch (NotBoundException e) {
+			System.out.println("El servidor no está publicado: " + e.getMessage());
+		} catch (RemoteException e) {
+			System.out.println("Error de conexión con el servidor: " + e.getMessage());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
