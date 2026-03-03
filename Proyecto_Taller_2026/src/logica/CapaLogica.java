@@ -11,27 +11,40 @@ import excepciones.*;
 
 public class CapaLogica {
 
+	private static CapaLogica instancia;
+	
 	private Ventas secVentas;
 	private Postres dicPostres;
-
+	private Monitor monitor;
 	private Persistencia persistencia;
 
-	public CapaLogica() {
+	private CapaLogica() {
 		secVentas = new Ventas();
 		dicPostres = new Postres();
 		persistencia = new Persistencia();
+		monitor = new Monitor();
 	}
 
-	public void AltaPostre(VO_Postre datosPostre) throws ExistePostreException {
-
-		Postre postre;
-
+	public static CapaLogica getInstancia() {
+		
+		if(instancia == null)
+			instancia = new CapaLogica();
+		
+		return instancia;
+	}
+	
+	public void AltaPostre(VO_Postre datosPostre) throws ExistePostreException, InterruptedException  {
+		
+		monitor.comienzoEscritura();
+		
 		if (dicPostres.Member(datosPostre.getCodigo())) {
+			monitor.terminoEscritura();
 			String msg = "El código ingresado ya está registrado para un postre";
 			throw new ExistePostreException(msg);
 		}
+		Postre postre;
 
-		if (datosPostre instanceof VO_Light) /* Comparar strings o instanceof */ {
+		if (datosPostre instanceof VO_Light) {
 			VO_Light datosLight = (VO_Light) datosPostre;
 			postre = new Light(datosLight.getCodigo(), datosLight.getNombre(), datosLight.getPrecio(),
 					datosLight.getEndulzante(), datosLight.getDescripcion());
@@ -40,20 +53,30 @@ public class CapaLogica {
 		}
 
 		dicPostres.Insert(postre);
+		monitor.terminoEscritura();
 	}
 
-	public VO_Postre[] ListadoPostres() {
-		return dicPostres.ListarPostres();
+	public VO_Postre[] ListadoPostres() throws InterruptedException {
+
+		monitor.comienzoLectura();
+		VO_Postre[] resultado = dicPostres.ListarPostres();
+		monitor.terminoLectura();
+		return resultado;
 	}
 
-	public VO_Postre detallePostre(VO_CodigoPostre codigoPostre) throws NoExistePostreException {
+	public VO_Postre detallePostre(VO_CodigoPostre codigoPostre) throws NoExistePostreException, InterruptedException  {
 
+		monitor.comienzoLectura();
+		
 		if (!dicPostres.Member(codigoPostre.getCodigoPostre())) {
+			monitor.terminoLectura();
 			throw new NoExistePostreException("El código ingresado no está registrado para ningún postre");
 		}
+		
 		Postre postreBuscado = dicPostres.Find(codigoPostre.getCodigoPostre());
 
-		VO_Postre datosDevolver = null;
+		VO_Postre datosDevolver;
+		
 		if (postreBuscado instanceof Light) {
 			datosDevolver = new VO_Light(postreBuscado.getCodigo(), postreBuscado.getNombre(),
 					postreBuscado.getPrecio(), ((Light) postreBuscado).getEndulzante(),
@@ -64,15 +87,19 @@ public class CapaLogica {
 					postreBuscado.getPrecio());
 		}
 
+		monitor.terminoLectura();
 		return datosDevolver;
 	}
 
-	public void inicioVenta(VO_VentaBasico datosVenta) throws FechaMayorUltimaVentaException {
+	public void inicioVenta(VO_VentaBasico datosVenta) throws FechaMayorUltimaVentaException, InterruptedException {
 		// Revisar excepcion
+		
+		monitor.comienzoEscritura();
+		
 		Venta ultimaVenta = secVentas.getUltimaVenta();
 		if (ultimaVenta != null && ultimaVenta.getFecha().isBefore(datosVenta.getFecha())) {
-			throw new FechaMayorUltimaVentaException(
-					"La fecha de la nueva venta no puede ser menor que la de la última venta registrada");
+			monitor.terminoEscritura();
+			throw new FechaMayorUltimaVentaException("La fecha de la nueva venta no puede ser menor que la de la última venta registrada");
 		}
 
 		Venta nuevaVenta = new Venta(datosVenta.getFecha(), datosVenta.getDireccion(), true, 0);
@@ -83,33 +110,41 @@ public class CapaLogica {
 			nuevaVenta.setNumero(ultimaVenta.getNumero() + 1);
 		}
 		secVentas.InsBack(nuevaVenta);
+		monitor.terminoEscritura();
 	}
 
 	public void agregarPostreEnVenta(VO_DetalleVenta datosDetalle) throws CantidadNegativaException,
-			CantidadMayor40Exception, NoExistePostreException, NoExisteNumeroVentaException, VentaNoEnProcesoException {
+			CantidadMayor40Exception, NoExistePostreException, NoExisteNumeroVentaException, VentaNoEnProcesoException, InterruptedException {
 
+		monitor.comienzoEscritura();
+		
 		if (datosDetalle.getCantidad() <= 0) {
+			monitor.terminoEscritura();
 			throw new CantidadNegativaException("La cantidad ingresada debe ser mayor a 0");
 		}
 		if (datosDetalle.getCantidad() > 40) {
+			monitor.terminoEscritura();
 			throw new CantidadMayor40Exception("La cantidad de postres ingresados no puede superar las 40 unidades");
 		}
 		if (!dicPostres.Member(datosDetalle.getCodigoPostre())) {
+			monitor.terminoEscritura();
 			throw new NoExistePostreException("El código ingresado no está registrado para ningún postre");
 		}
 		if (!secVentas.Member(datosDetalle.getNumeroVenta())) {
+			monitor.terminoEscritura();
 			throw new NoExisteNumeroVentaException("El número ingresado no está registrado para ninguna venta");
 		}
 
 		Venta ventaBuscada = secVentas.Find(datosDetalle.getNumeroVenta());
 
 		if (!ventaBuscada.getEnProceso()) {
+			monitor.terminoEscritura();
 			throw new VentaNoEnProcesoException("La venta ya está finalizada, no le puede agregar más postres");
 		}
 
 		if ((ventaBuscada.getTotalUnidades() + datosDetalle.getCantidad()) > 40) {
-			throw new CantidadMayor40Exception(
-					"La suma total de cantidades de una venta no puede superar las 40 unidades");
+			monitor.terminoEscritura();
+			throw new CantidadMayor40Exception("La suma total de cantidades de una venta no puede superar las 40 unidades");
 		}
 
 		if (ventaBuscada.ExisteDetalle(datosDetalle.getCodigoPostre())) {
@@ -122,29 +157,35 @@ public class CapaLogica {
 
 		}
 		secVentas.Modify(ventaBuscada);
+		monitor.terminoEscritura();
 	}
 
 	public void eliminarPostreEnVenta(VO_DetalleVenta datosDetalle) throws CantidadNegativaException,
-			NoExisteNumeroVentaException, NoExistePostreException, VentaNoEnProcesoException {
+			NoExisteNumeroVentaException, NoExistePostreException, VentaNoEnProcesoException, InterruptedException  {
 
+		monitor.comienzoEscritura();
+		
 		if (datosDetalle.getCantidad() <= 0) {
+			monitor.terminoEscritura();
 			throw new CantidadNegativaException("La cantidad ingresada debe ser mayor a 0");
 		}
 
 		if (!secVentas.Member(datosDetalle.getNumeroVenta())) {
+			monitor.terminoEscritura();
 			throw new NoExisteNumeroVentaException("El codigo ingresado no corresponde a ninguna venta");
 		}
 
 		Venta venta = secVentas.Find(datosDetalle.getNumeroVenta());
 
 		if (!venta.getEnProceso()) {
+			monitor.terminoEscritura();
 			throw new VentaNoEnProcesoException("La venta ya esta finalizada, no se pueden eliminar postres");
 		}
 
 		if (!venta.ExisteDetalle(datosDetalle.getCodigoPostre())) {
+			monitor.terminoEscritura();
 			throw new NoExistePostreException("El postre no existe en esta venta");
 		}
-		;
 
 		DetalleVenta detalle = venta.getDetalle(datosDetalle.getCodigoPostre());
 		int cantidadActual = detalle.getCantidad();
@@ -154,14 +195,19 @@ public class CapaLogica {
 			venta.BorrarDetalle(detalle.getPostre().getCodigo());
 		else
 			detalle.setCantidad(cantidadActual - cantidadEliminar);
+		
+		monitor.terminoEscritura();
 
 	}
 
 	public VO_ConfirmacionVentaFinalizada finalizarVenta(VO_FinalizarVenta datosFinalizarVenta)
-			throws NoExisteNumeroVentaException {
+			throws NoExisteNumeroVentaException, InterruptedException {
+		
+		monitor.comienzoEscritura();
 
 		double monto = 0.0;
 		if (!secVentas.Member(datosFinalizarVenta.getNumero())) {
+			monitor.terminoEscritura();
 			throw new NoExisteNumeroVentaException("No existe venta registrada con el número ingresado");
 		}
 
@@ -172,59 +218,87 @@ public class CapaLogica {
 			ventaBuscada.setEnProceso(false);
 			monto = ventaBuscada.getMonto();
 		}
-
+		
+		monitor.terminoEscritura();
 		return new VO_ConfirmacionVentaFinalizada(monto, datosFinalizarVenta.getConfirma());
 	}
 
-	public VO_VentaCompleto[] listadoVentas(VO_IndicacionListado datosIndicacion) throws IndicacionInvalidaException {
+	public VO_VentaCompleto[] listadoVentas(VO_IndicacionListado datosIndicacion) throws IndicacionInvalidaException, InterruptedException {
 
+		monitor.comienzoLectura();
+		
 		Set<Character> indicacionesValidas = Set.of('T', 'P', 'F');
 		if (!indicacionesValidas.contains(datosIndicacion.getIndicacion())) {
+			monitor.terminoLectura();
 			throw new IndicacionInvalidaException("El caracter ingresado no corresponde con ninguna indicacion");
 		}
+		
+		VO_VentaCompleto[] resultado;
 
 		if (datosIndicacion.getIndicacion() == 'T')
-			return secVentas.ListarVentas();
+			resultado = secVentas.ListarVentas();
 		else if (datosIndicacion.getIndicacion() == 'P')
-			return secVentas.ListarVentasEnProceso();
+			resultado = secVentas.ListarVentasEnProceso();
 		else
-			return secVentas.ListarVentasEnFinalizadas();
+			resultado = secVentas.ListarVentasEnFinalizadas();
+		
+		monitor.terminoLectura();
+		return resultado;
 	}
 
 	public VO_PostreCantidad[] listadoPostresEnVenta(VO_NumeroVenta datosNumeroVenta)
-			throws NoExisteNumeroVentaException {
-
+			throws NoExisteNumeroVentaException, InterruptedException  {
+		
+		monitor.comienzoLectura();
+		
 		if (!secVentas.Member(datosNumeroVenta.getNumero())) {
+			monitor.terminoLectura();
 			throw new NoExisteNumeroVentaException("No existe venta registrada con el número ingresado");
 		}
 
 		Venta ventaBuscada = secVentas.Find(datosNumeroVenta.getNumero());
-		return ventaBuscada.ListarPostres();
+		VO_PostreCantidad[] resultado = ventaBuscada.ListarPostres();
+		
+		monitor.terminoLectura();
+		return resultado;
 	}
 
 	public VO_CantidadMonto totalMontoPostreYFecha(VO_PostreFecha datos)
-			throws FechaMayorHoyException, NoExistePostreException {
+			throws FechaMayorHoyException, NoExistePostreException, InterruptedException  {
+		
+		monitor.comienzoLectura();
 
 		if (!dicPostres.Member(datos.getCodigo())) {
+			monitor.terminoLectura();
 			throw new NoExistePostreException("El código ingresado no está registrado para ningún postre");
 		}
 
 		if (datos.getFecha().isAfter(LocalDate.now())) {
+			monitor.terminoLectura();
 			throw new FechaMayorHoyException("La fecha ingresada no puede ser mayor a hoy");
 		}
 
-		return secVentas.totalMontoPostreYFecha(datos);
+		VO_CantidadMonto resultado = secVentas.totalMontoPostreYFecha(datos);
+		monitor.terminoLectura();
+		return resultado;	
+		
 	}
 
-	public void respaldarDatos() throws PersistenciaException {
+	public void respaldarDatos() throws PersistenciaException, InterruptedException {
+		
+		monitor.comienzoLectura();
 		VO_Persistencia datosRespaldar = new VO_Persistencia(dicPostres, secVentas);
 		persistencia.respaldar("datos.dat", datosRespaldar);
+		monitor.terminoLectura();
 	}
 
-	public void recuperarDatos() throws ClassNotFoundException, PersistenciaException {
+	public void recuperarDatos() throws ClassNotFoundException, PersistenciaException, InterruptedException {
+		
+		monitor.comienzoEscritura();
 		VO_Persistencia datosRecuperados = persistencia.recuperar("datos.dat");
 
 		dicPostres = datosRecuperados.getPostres();
 		secVentas = datosRecuperados.getVentas();
+		monitor.terminoEscritura();
 	}
 }

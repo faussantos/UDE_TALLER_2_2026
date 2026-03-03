@@ -9,7 +9,7 @@ public class Grafica {
 
 	public static void main(String args[]) {
 
-		CapaLogica cp = new CapaLogica();
+		CapaLogica cp = CapaLogica.getInstancia(); 
 
 		try {
 
