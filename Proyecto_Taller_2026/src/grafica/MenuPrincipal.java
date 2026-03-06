@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+
+import grafica.Registrar.NuevoPostre;
+
 import java.awt.Font;
 
 public class MenuPrincipal {
@@ -48,7 +51,7 @@ public class MenuPrincipal {
 		frmMen.setJMenuBar(menuBar);
 		
 		JMenu mnNewMenu = new JMenu("Archivo");
-		mnNewMenu.setFont(new Font("Arial", Font.BOLD, 14));
+		mnNewMenu.setFont(new Font("Arial", Font.PLAIN, 14));
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Guardar");
@@ -58,16 +61,12 @@ public class MenuPrincipal {
 		mnNewMenu.add(mntmNewMenuItem_1);
 		
 		JMenu mnNewMenu_1 = new JMenu("Registrar");
-		mnNewMenu_1.setFont(new Font("Arial", Font.BOLD, 14));
+		mnNewMenu_1.setFont(new Font("Arial", Font.PLAIN, 14));
 
 		menuBar.add(mnNewMenu_1);
 		
 		JMenuItem itemAltaPostre = new JMenuItem("Nuevo postre");
 		mnNewMenu_1.add(itemAltaPostre);
-		itemAltaPostre.addActionListener(e -> {
-		    new NuevoPostre();
-		});
-		
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Nueva venta");
 		mnNewMenu_1.add(mntmNewMenuItem_3);
@@ -82,7 +81,7 @@ public class MenuPrincipal {
 		mnNewMenu_1.add(mntmNewMenuItem_6);
 		
 		JMenu mnNewMenu_2 = new JMenu("Consultas");
-		mnNewMenu_2.setFont(new Font("Arial", Font.BOLD, 14));
+		mnNewMenu_2.setFont(new Font("Arial", Font.PLAIN, 14));
 
 		menuBar.add(mnNewMenu_2);
 		
@@ -93,7 +92,7 @@ public class MenuPrincipal {
 		mnNewMenu_2.add(mntmNewMenuItem_8);
 		
 		JMenu mnNewMenu_3 = new JMenu("Listados");
-		mnNewMenu_3.setFont(new Font("Arial", Font.BOLD, 14));
+		mnNewMenu_3.setFont(new Font("Arial", Font.PLAIN, 14));
 
 		menuBar.add(mnNewMenu_3);
 		

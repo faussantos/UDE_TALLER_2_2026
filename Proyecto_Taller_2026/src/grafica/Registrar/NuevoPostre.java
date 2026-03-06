@@ -1,4 +1,4 @@
-package grafica;
+package grafica.Registrar;
 
 import java.awt.EventQueue;
 
@@ -100,7 +100,7 @@ public class NuevoPostre {
 		lblEndulzante.setBounds(20, 213, 86, 16);
 		frmRegistroDePostre.getContentPane().add(lblEndulzante);
 		
-		JLabel lblDescripcion = new JLabel("Descirpcion:");
+		JLabel lblDescripcion = new JLabel("Descirpción:");
 		lblDescripcion.setFont(new Font("Arial", Font.PLAIN, 13));
 		lblDescripcion.setBounds(20, 250, 86, 16);
 		frmRegistroDePostre.getContentPane().add(lblDescripcion);
@@ -138,5 +138,7 @@ public class NuevoPostre {
 				    txtFieldDescripcion.setVisible(marcado);
 				}
 			});
+		
+		frmRegistroDePostre.setVisible(true);
 	}
 }

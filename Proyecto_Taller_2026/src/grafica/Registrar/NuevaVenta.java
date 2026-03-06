@@ -1,4 +1,4 @@
-package grafica;
+package grafica.Registrar;
 
 import java.awt.EventQueue;
 import java.time.LocalDate;
@@ -46,7 +46,7 @@ public class NuevaVenta {
 		frmRegistroDeVenta.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmRegistroDeVenta.getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("Ingrese los datos de la nueva venta");
+		JLabel lblNewLabel_1 = new JLabel("Ingrese los datos de la nueva venta:");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 15));
 		lblNewLabel_1.setBounds(10, 10, 270, 22);
