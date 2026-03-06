@@ -1,4 +1,4 @@
-package grafica.Registrar;
+package grafica.registrar;
 
 import java.awt.EventQueue;
 

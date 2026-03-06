@@ -1,4 +1,4 @@
-package grafica.Consultar;
+package grafica.consultar;
 
 import java.awt.EventQueue;
 

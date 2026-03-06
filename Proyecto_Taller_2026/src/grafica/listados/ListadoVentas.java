@@ -1,4 +1,4 @@
-package grafica.Listados;
+package grafica.listados;
 
 import java.awt.EventQueue;
 
