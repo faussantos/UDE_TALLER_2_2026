@@ -1,9 +1,14 @@
 package grafica.registrar;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDate;
 
 import javax.swing.*;
+
+import grafica.controladores.NuevaVentaController;
+
 import java.awt.*; 
 
 
@@ -11,7 +16,8 @@ import java.awt.*;
 public class NuevaVenta {
 
 	private JFrame frmRegistroDeVenta;
-	private JTextField textField;
+	private JTextField textFieldDireccion;
+	private NuevaVentaController _controller;
 	
 	/**
 	 * Launch the application.
@@ -33,6 +39,7 @@ public class NuevaVenta {
 	 * Create the application.
 	 */
 	public NuevaVenta() {
+		_controller = new NuevaVentaController();
 		initialize();
 	}
 
@@ -46,27 +53,29 @@ public class NuevaVenta {
 		frmRegistroDeVenta.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmRegistroDeVenta.getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("Ingrese los datos de la nueva venta:");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 15));
-		lblNewLabel_1.setBounds(10, 10, 270, 22);
-		frmRegistroDeVenta.getContentPane().add(lblNewLabel_1);
+		JLabel lblTitulo = new JLabel("Ingrese los datos de la nueva venta:");
+		lblTitulo.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblTitulo.setFont(new Font("Arial", Font.BOLD, 15));
+		lblTitulo.setBounds(10, 10, 270, 22);
+		frmRegistroDeVenta.getContentPane().add(lblTitulo);
 		
-		JLabel lblNewLabel_2 = new JLabel("Direccion :");
-		lblNewLabel_2.setFont(new Font("Arial", Font.PLAIN, 13));
-		lblNewLabel_2.setBounds(39, 53, 86, 16);
-		frmRegistroDeVenta.getContentPane().add(lblNewLabel_2);
+		//DIRECCION
+		JLabel lblDireccion = new JLabel("Direccion :");
+		lblDireccion.setFont(new Font("Arial", Font.PLAIN, 13));
+		lblDireccion.setBounds(39, 53, 86, 16);
+		frmRegistroDeVenta.getContentPane().add(lblDireccion);
 		
-		textField = new JTextField();
-		textField.setBounds(114, 52, 250, 19);
-		frmRegistroDeVenta.getContentPane().add(textField);
-		textField.setColumns(10);
+		textFieldDireccion = new JTextField();
+		textFieldDireccion.setBounds(114, 52, 250, 19);
+		frmRegistroDeVenta.getContentPane().add(textFieldDireccion);
+		textFieldDireccion.setColumns(10);
+		//DIRECCION
 		
-		JLabel lblNewLabel_2_1 = new JLabel("Fecha: ");
-		lblNewLabel_2_1.setFont(new Font("Arial", Font.PLAIN, 13));
-		lblNewLabel_2_1.setBounds(39, 94, 86, 16);
-		frmRegistroDeVenta.getContentPane().add(lblNewLabel_2_1);
-		
+		//FECHA
+		JLabel lblFecha = new JLabel("Fecha: ");
+		lblFecha.setFont(new Font("Arial", Font.PLAIN, 13));
+		lblFecha.setBounds(39, 94, 86, 16);
+		frmRegistroDeVenta.getContentPane().add(lblFecha);
 		
 		Integer[] dias = new Integer[31];
 		for (int i = 0; i < 31; i++) {
@@ -82,9 +91,12 @@ public class NuevaVenta {
 		
 		String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
                 "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
-		JComboBox<String> comboMes = new JComboBox<>();
+		
+		JComboBox<AUX_Mes> comboMes = new JComboBox<>();
+		int numeroMes = 1;
 		for(String mes : meses) {
-			comboMes.addItem(mes);
+			AUX_Mes mesItem = new AUX_Mes(numeroMes, mes);
+			comboMes.addItem(mesItem);
 		}
 		comboMes.setBounds(167, 92, 89, 21);
 		frmRegistroDeVenta.getContentPane().add(comboMes);
@@ -100,7 +112,7 @@ public class NuevaVenta {
 		}
 		comboAnio.setBounds(266, 92, 56, 21);
 		frmRegistroDeVenta.getContentPane().add(comboAnio);
-
+		//FECHA
 		
 		LocalDate hoy = LocalDate.now();
 		comboDia.setSelectedItem(hoy.getDayOfMonth());
@@ -114,5 +126,19 @@ public class NuevaVenta {
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.setBounds(313, 163, 85, 21);
 		frmRegistroDeVenta.getContentPane().add(btnAceptar);
+		
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String direccion = textFieldDireccion.getText();
+				
+				int dia = (Integer) comboDia.getSelectedItem();
+				AUX_Mes mesTexto = (AUX_Mes)comboMes.getSelectedItem();
+				int anio = (Integer) comboAnio.getSelectedItem();
+				
+				LocalDate fecha = LocalDate.of(anio, mesTexto.getNumero(), dia);
+				
+				_controller.NuevaVenta(fecha, direccion);
+			}
+		});
 	}
 }
