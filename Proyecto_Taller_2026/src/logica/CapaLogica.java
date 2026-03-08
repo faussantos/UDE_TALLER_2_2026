@@ -36,7 +36,7 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica{
 		return instancia;
 	}
 	
-	public void AltaPostre(VO_Postre datosPostre) throws ExistePostreException, InterruptedException  {
+	public void AltaPostre(VO_Postre datosPostre) throws ExistePostreException, InterruptedException, RemoteException  {
 		
 		monitor.comienzoEscritura();
 		
@@ -94,8 +94,7 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica{
 		return datosDevolver;
 	}
 
-	public void inicioVenta(VO_VentaBasico datosVenta) throws FechaMayorUltimaVentaException, InterruptedException {
-		// Revisar excepcion
+	public int inicioVenta(VO_VentaBasico datosVenta) throws FechaMayorUltimaVentaException, InterruptedException {
 		
 		monitor.comienzoEscritura();
 		
@@ -107,13 +106,20 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica{
 
 		Venta nuevaVenta = new Venta(datosVenta.getFecha(), datosVenta.getDireccion(), true, 0);
 
+		int numeroVenta;
 		if (secVentas.EsVacia())
-			nuevaVenta.setNumero(1);
-		else {
-			nuevaVenta.setNumero(ultimaVenta.getNumero() + 1);
+		{
+			numeroVenta = 1;
+			nuevaVenta.setNumero(numeroVenta);
 		}
+		else {
+			numeroVenta = ultimaVenta.getNumero() + 1;
+			nuevaVenta.setNumero(numeroVenta);
+		}
+		
 		secVentas.InsBack(nuevaVenta);
 		monitor.terminoEscritura();
+		return numeroVenta;
 	}
 
 	public void agregarPostreEnVenta(VO_DetalleVenta datosDetalle) throws CantidadNegativaException,

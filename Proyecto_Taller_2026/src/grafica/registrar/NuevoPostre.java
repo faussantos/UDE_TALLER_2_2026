@@ -4,7 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import java.awt.BorderLayout;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
@@ -45,7 +46,7 @@ public class NuevoPostre {
 	 * Create the application.
 	 */
 	public NuevoPostre() {
-		_controller = new NuevoPostreController();
+		_controller = new NuevoPostreController(this);
 		initialize();
 	}
 
@@ -132,6 +133,11 @@ public class NuevoPostre {
 		// DATOS LIGHT
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		    	frmRegistroDePostre.dispose();
+		    }
+		});
 		btnCancelar.setBounds(10, 316, 85, 21);
 		frmRegistroDePostre.getContentPane().add(btnCancelar);
 		
@@ -141,12 +147,31 @@ public class NuevoPostre {
 				String codigo = textFieldCodigoPostre.getText();
 				String nombre = textFieldNombrePostre.getText();
 				String precio = textFieldPrecio.getText();
+				 if (codigo.isEmpty() || nombre.isEmpty() || precio.isEmpty()) {
+			            mostrarError("Todos los campos son obligatorios.");
+			            return;
+			        }
+				 
+				 double precioDouble;
+			        try {
+			            precioDouble = Double.parseDouble(precio);
+			        } catch (NumberFormatException ex) {
+			            mostrarError("El precio debe ser un número.");
+			            return;
+			        }
 				
 				boolean light = chckbxLight.isSelected();
 				String endulzante = txtFieldEndulzante.getText();
 				String descripcion = txtFieldDescripcion.getText();
 				
-				_controller.NuevoPostre(codigo, nombre, precio, light, endulzante, descripcion);
+				if (light) {
+				    if (endulzante.isEmpty() || descripcion.isEmpty()) {
+				        mostrarError("Debe ingresar el endulzante y la descripción para un postre light.");
+				        return;
+				    }
+				}
+				
+				_controller.NuevoPostre(codigo, nombre, precioDouble, light, endulzante, descripcion);
 			}
 		});
 		btnAceptar.setBounds(367, 316, 85, 21);
@@ -169,5 +194,15 @@ public class NuevoPostre {
 			});
 		
 		frmRegistroDePostre.setVisible(true);
+	}
+	
+	public void mostrarError(String mensaje) {
+	    JOptionPane.showMessageDialog(frmRegistroDePostre, mensaje, 
+	        "Error", JOptionPane.ERROR_MESSAGE);
+	}
+
+	public void mostrarExito(String mensaje) {
+	    JOptionPane.showMessageDialog(frmRegistroDePostre, mensaje, 
+	        "Éxito", JOptionPane.INFORMATION_MESSAGE);
 	}
 }

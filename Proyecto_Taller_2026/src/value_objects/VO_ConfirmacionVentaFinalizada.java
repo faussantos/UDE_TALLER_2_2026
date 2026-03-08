@@ -2,19 +2,19 @@ package value_objects;
 
 public class VO_ConfirmacionVentaFinalizada extends ValueObject {
 	private double monto;
-	private boolean confirmada;
+	private boolean confirma;
 
 	public VO_ConfirmacionVentaFinalizada(double mon, boolean conf) {
 		monto = mon;
-		confirmada = conf;
+		confirma = conf;
 	}
 
 	public double getMonto() {
 		return monto;
 	}
 
-	public boolean isConfirmada() {
-		return confirmada;
+	public boolean getConfirma() {
+		return confirma;
 	}
 
 }

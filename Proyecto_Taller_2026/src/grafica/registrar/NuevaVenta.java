@@ -39,7 +39,7 @@ public class NuevaVenta {
 	 * Create the application.
 	 */
 	public NuevaVenta() {
-		_controller = new NuevaVentaController();
+		_controller = new NuevaVentaController(this);
 		initialize();
 	}
 
@@ -120,6 +120,11 @@ public class NuevaVenta {
 		comboAnio.setSelectedItem(hoy.getYear());
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		    	frmRegistroDeVenta.dispose();
+		    }
+		});
 		btnCancelar.setBounds(10, 163, 85, 21);
 		frmRegistroDeVenta.getContentPane().add(btnCancelar);
 		
@@ -137,8 +142,37 @@ public class NuevaVenta {
 				
 				LocalDate fecha = LocalDate.of(anio, mesTexto.getNumero(), dia);
 				
+				if (direccion.isEmpty()) {
+				    mostrarError("La dirección es obligatoria.");
+				    return;
+				}
 				_controller.NuevaVenta(fecha, direccion);
 			}
 		});
+		
+		
+	}
+	
+	public void mostrarError(String mensaje) {
+	    JOptionPane.showMessageDialog(frmRegistroDeVenta, mensaje, 
+	        "Error", JOptionPane.ERROR_MESSAGE);
+	}
+
+	public void mostrarExito(int numeroVenta) {
+		
+		String[] opciones = {"Sí", "No"};
+	    int respuesta = JOptionPane.showOptionDialog(
+	        frmRegistroDeVenta,
+	        "Venta número " + numeroVenta + " creada correctamente. ¿Desea agregar postres?",
+	        "Éxito",
+	        JOptionPane.YES_NO_OPTION,
+	        JOptionPane.INFORMATION_MESSAGE,
+	        null,
+	        opciones,
+	        opciones[0]
+	    );
+	    if (respuesta == 0) {
+	        new AgregarPostreEnVenta(numeroVenta);
+	    }
 	}
 }

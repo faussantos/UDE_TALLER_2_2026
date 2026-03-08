@@ -16,7 +16,7 @@ public interface ICapaLogica extends Remote {
 	public VO_Postre detallePostre(VO_CodigoPostre codigoPostre)
 			throws RemoteException, NoExistePostreException, InterruptedException;
 
-	public void inicioVenta(VO_VentaBasico datosVenta)
+	public int inicioVenta(VO_VentaBasico datosVenta)
 			throws RemoteException, FechaMayorUltimaVentaException, InterruptedException;
 
 	public void agregarPostreEnVenta(VO_DetalleVenta datosDetalle)

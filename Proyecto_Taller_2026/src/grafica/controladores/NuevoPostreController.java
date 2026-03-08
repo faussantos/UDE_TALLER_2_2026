@@ -1,31 +1,25 @@
 package grafica.controladores;
 
-import java.io.FileInputStream;
-import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.util.Properties;
-
 import excepciones.ExistePostreException;
 import grafica.registrar.NuevoPostre;
-import logica.ICapaLogica;
 import value_objects.VO_Light;
 import value_objects.VO_Postre;
 
-public class NuevoPostreController {
+public class NuevoPostreController extends Controller {
 
-	private ICapaLogica capaLogica;
 	private NuevoPostre ventana;
 
-	public NuevoPostreController() {
+	public NuevoPostreController(NuevoPostre ven) {
+		super();
+		this.ventana = ven;
 
 	}
 
-	public void NuevoPostre(String codigo, String nombre, String precio, boolean light, String endulzante,
+	public void NuevoPostre(String codigo, String nombre, double precioDouble, boolean light, String endulzante,
 			String descripcion) {
 		try {
 			VO_Postre datosPostre;
-
-			double precioDouble = Double.parseDouble(precio);
 
 			if (light) {
 				datosPostre = new VO_Light(codigo, nombre, precioDouble, endulzante, descripcion);
@@ -34,9 +28,14 @@ public class NuevoPostreController {
 			}
 
 			capaLogica.AltaPostre(datosPostre);
+			ventana.mostrarExito("Postre ingresado correctamente");
 
+		} catch (ExistePostreException e) {
+		    ventana.mostrarError("Ya existe un postre con ese código.");
+		} catch (RemoteException e) {
+		    ventana.mostrarError("Error de conexión con el servidor.");
 		} catch (Exception e) {
-
+		    ventana.mostrarError("Error inesperado: " + e.getMessage());
 		}
 	}
 }

@@ -7,9 +7,13 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import grafica.registrar.NuevoPostre;
+import grafica.registrar.*;
+import grafica.consultar.*;
+import grafica.listados.*;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MenuPrincipal {
 
@@ -50,60 +54,118 @@ public class MenuPrincipal {
 		JMenuBar menuBar = new JMenuBar();
 		frmMen.setJMenuBar(menuBar);
 		
-		JMenu mnNewMenu = new JMenu("Archivo");
-		mnNewMenu.setFont(new Font("Arial", Font.PLAIN, 14));
-		menuBar.add(mnNewMenu);
+		JMenu menuArchivo = new JMenu("Archivo");
+		menuArchivo.setFont(new Font("Arial", Font.PLAIN, 14));
+		menuBar.add(menuArchivo);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Guardar");
-		mnNewMenu.add(mntmNewMenuItem);
+		menuArchivo.add(mntmNewMenuItem);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Abrir");
-		mnNewMenu.add(mntmNewMenuItem_1);
+		menuArchivo.add(mntmNewMenuItem_1);
 		
-		JMenu mnNewMenu_1 = new JMenu("Registrar");
-		mnNewMenu_1.setFont(new Font("Arial", Font.PLAIN, 14));
+		JMenu menuRegistro = new JMenu("Registrar");
+		menuRegistro.setFont(new Font("Arial", Font.PLAIN, 14));
 
-		menuBar.add(mnNewMenu_1);
+		menuBar.add(menuRegistro);
 		
-		JMenuItem itemAltaPostre = new JMenuItem("Nuevo postre");
-		mnNewMenu_1.add(itemAltaPostre);
+		JMenuItem itemNuevoPostre = new JMenuItem("Nuevo postre");
+		menuRegistro.add(itemNuevoPostre);
+		itemNuevoPostre.addActionListener(
+				new ActionListener() {
+					public void actionPerformed (ActionEvent e) {
+						new NuevoPostre();
+					}
+				});
 		
-		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Nueva venta");
-		mnNewMenu_1.add(mntmNewMenuItem_3);
+		JMenuItem itemNuevaVenta = new JMenuItem("Nueva venta");
+		menuRegistro.add(itemNuevaVenta);
+		itemNuevaVenta.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						new NuevaVenta();
+					}
+				});
 		
-		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Agregar postre a venta");
-		mnNewMenu_1.add(mntmNewMenuItem_4);
+		JMenuItem itemAgregarPostreEnVenta = new JMenuItem("Agregar postre a venta");
+		menuRegistro.add(itemAgregarPostreEnVenta);
+		itemAgregarPostreEnVenta.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						new AgregarPostreEnVenta();
+					}
+				});
 		
-		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Eliminar postre a venta");
-		mnNewMenu_1.add(mntmNewMenuItem_5);
+		JMenuItem itemEliminarPostreEnVenta = new JMenuItem("Eliminar postre a venta");
+		menuRegistro.add(itemEliminarPostreEnVenta);
+		itemEliminarPostreEnVenta.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				new EliminarPostreEnVenta();
+			}
+		});
 		
-		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Finalizar venta");
-		mnNewMenu_1.add(mntmNewMenuItem_6);
+		JMenuItem itemFinalizarVenta = new JMenuItem("Finalizar venta");
+		menuRegistro.add(itemFinalizarVenta);
+		itemFinalizarVenta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				new FinalizarVenta();
+			}
+		});
 		
-		JMenu mnNewMenu_2 = new JMenu("Consultas");
-		mnNewMenu_2.setFont(new Font("Arial", Font.PLAIN, 14));
+		JMenu menuConsultas = new JMenu("Consultas");
+		menuConsultas.setFont(new Font("Arial", Font.PLAIN, 14));
 
-		menuBar.add(mnNewMenu_2);
+		menuBar.add(menuConsultas);
 		
-		JMenuItem mntmNewMenuItem_7 = new JMenuItem("Información postre");
-		mnNewMenu_2.add(mntmNewMenuItem_7);
+		JMenuItem itemInformacionPostre = new JMenuItem("Información postre");
+		menuConsultas.add(itemInformacionPostre);
+		itemInformacionPostre.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						new PostreDetallado();
+					}
+				});
 		
-		JMenuItem mntmNewMenuItem_8 = new JMenuItem("Recaudacion por postre");
-		mnNewMenu_2.add(mntmNewMenuItem_8);
+		JMenuItem itemRecaudacionPostre = new JMenuItem("Recaudacion por postre");
+		menuConsultas.add(itemRecaudacionPostre);
+		itemRecaudacionPostre.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						new RecaudacionPostreFecha();
+					}
+		});
 		
-		JMenu mnNewMenu_3 = new JMenu("Listados");
-		mnNewMenu_3.setFont(new Font("Arial", Font.PLAIN, 14));
+		JMenu menuListados = new JMenu("Listados");
+		menuListados.setFont(new Font("Arial", Font.PLAIN, 14));
 
-		menuBar.add(mnNewMenu_3);
+		menuBar.add(menuListados);
 		
-		JMenuItem mntmNewMenuItem_9 = new JMenuItem("Postres");
-		mnNewMenu_3.add(mntmNewMenuItem_9);
+		JMenuItem itemPostres = new JMenuItem("Postres");
+		menuListados.add(itemPostres);
+		itemPostres.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						new ListadoPostres();
+					}
+		});
 		
-		JMenuItem mntmNewMenuItem_10 = new JMenuItem("Ventas");
-		mnNewMenu_3.add(mntmNewMenuItem_10);
+		JMenuItem itemVentas = new JMenuItem("Ventas");
+		menuListados.add(itemVentas);
+		itemVentas.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						new ListadoVentas();
+					}
+		});
 		
-		JMenuItem mntmNewMenuItem_11 = new JMenuItem("Detalles de venta");
-		mnNewMenu_3.add(mntmNewMenuItem_11);
+		JMenuItem itemDetalles = new JMenuItem("Detalles de venta");
+		menuListados.add(itemDetalles);
+		itemDetalles.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						new ListadoDetallesEnVenta();
+					}
+				});
 	}
 
 }

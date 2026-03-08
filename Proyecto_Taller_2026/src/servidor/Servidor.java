@@ -17,21 +17,36 @@ public class Servidor {
 
 		try {
 			Properties p = new Properties();
-			p.load (new FileInputStream ("config/config.properties"));
+			String nomArch = "config/config.properties";
+			p.load (new FileInputStream (nomArch));
 			String ip = p.getProperty("ipServidor");
 			String puerto = p.getProperty("puertoServidor");
-			LocateRegistry.createRegistry(Integer.parseInt(puerto));
+			int port = Integer.parseInt(puerto);
+			
+			LocateRegistry.createRegistry(port);
 
-			Naming.rebind("//" + ip + ":" + puerto + "/CapaLogica", CapaLogica.getInstancia());
+			String ruta = "//" + ip + ":" + puerto + "/CapaLogica";
+			CapaLogica fachada = CapaLogica.getInstancia();
+
+			Naming.rebind(ruta, fachada);
 
 			System.out.println("Servidor publicado");
-
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			}
+			catch (RemoteException e) // si ocurre cualquier problema de red
+			{
+				e.printStackTrace();
+			}
+			catch (MalformedURLException e) // si la ruta no esta bien formada
+			{
+				e.printStackTrace();
+			}
+			catch (FileNotFoundException e) // si no encuentra el archivo de configuracion
+			{
+				e.printStackTrace();
+			}
+			catch (IOException e) // si ocurre cualquier otro error de E/S
+			{
+				e.printStackTrace();
+			}
 	}
 }
