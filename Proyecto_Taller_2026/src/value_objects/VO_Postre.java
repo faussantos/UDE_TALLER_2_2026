@@ -10,7 +10,7 @@ public class VO_Postre extends ValueObject{
 		nombre = nom;
 		precio = pre;
 	}
-
+	
 	public String getCodigo() {
 		return codigo;
 	}

@@ -150,7 +150,8 @@ public class NuevaVenta {
 			}
 		});
 		
-		
+		frmRegistroDeVenta.setVisible(true);
+
 	}
 	
 	public void mostrarError(String mensaje) {
