@@ -1,5 +1,6 @@
 package grafica.controladores;
 
+import excepciones.NoExisteNumeroVentaException;
 import grafica.listados.ListadoDetallesEnVenta;
 import grafica.listados.ListadoVentas;
 import value_objects.VO_NumeroVenta;
@@ -14,12 +15,16 @@ public class ListadoDetallesEnVentaController extends Controller {
 		ventana = ven;
 	}
 
-	public void ListadoDetallesEnVenta(VO_NumeroVenta datosVenta) {
+	public void ListadoDetallesEnVenta(int numeroVenta) {
+		VO_NumeroVenta datosVenta = new VO_NumeroVenta(numeroVenta);
+		
 		try {
 			VO_PostreCantidad[] listadoDetalles = capaLogica.listadoPostresEnVenta(datosVenta);
 			ventana.mostrarDetalles(listadoDetalles);
+		} catch (NoExisteNumeroVentaException e) {
+			ventana.mostrarError(e.darMensaje());
 		} catch (Exception e) {
-			// TODO: handle exception
-		}
+			ventana.mostrarError("Ha ocurrido un error inesperado: " + e.getMessage());
+		} 
 	}
 }

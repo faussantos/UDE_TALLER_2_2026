@@ -1,5 +1,9 @@
 package grafica.controladores;
 
+import java.time.LocalDate;
+
+import excepciones.FechaMayorHoyException;
+import excepciones.NoExistePostreException;
 import grafica.consultar.RecaudacionPostreFecha;
 import grafica.listados.ListadoDetallesEnVenta;
 import value_objects.VO_CantidadMonto;
@@ -13,17 +17,23 @@ public class RecaudacionPostreFechaController extends Controller {
 		super();
 		ventana = ven;
 	}
-	
-	public VO_CantidadMonto RecaudacionPostreFecha(VO_PostreFecha datosPostreFecha) {
+
+	public VO_CantidadMonto RecaudacionPostreFecha(String codigo, LocalDate fecha) {
+		
+		VO_PostreFecha datosPostreFecha = new VO_PostreFecha(codigo, fecha);
 		VO_CantidadMonto datosCantidadMonto = null;
 		
 		try {
 			datosCantidadMonto = capaLogica.totalMontoPostreYFecha(datosPostreFecha);
-			
+
+		} catch (FechaMayorHoyException e) {
+			ventana.mostrarError(e.darMensaje());
+		} catch (NoExistePostreException e) {
+			ventana.mostrarError(e.darMensaje());
 		} catch (Exception e) {
-			// TODO: handle exception
+			ventana.mostrarError("Ha ocurrido un error inesperado: " + e.getMessage());
 		}
-		
+
 		return datosCantidadMonto;
 	}
 }

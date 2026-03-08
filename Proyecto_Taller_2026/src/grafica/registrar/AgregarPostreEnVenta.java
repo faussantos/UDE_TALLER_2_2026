@@ -45,11 +45,13 @@ public class AgregarPostreEnVenta extends Ventana {
 	 * Create the application.
 	 */
 	public AgregarPostreEnVenta() {
+		super("Agregar postre a venta");
 		_controller = new AgregarPostreEnVentaController(this);
 		initialize();
 	}
 	
 	public AgregarPostreEnVenta(int numeroVenta) {
+		super("Agregar postre a venta");
 	    initialize();
 		_controller = new AgregarPostreEnVentaController(this);
 	    textFieldNumeroVenta.setText(String.valueOf(numeroVenta));
@@ -61,11 +63,7 @@ public class AgregarPostreEnVenta extends Ventana {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		_frame = new JFrame();
-		_frame.setTitle("Agregar postre a venta");
 		_frame.setBounds(100, 100, 440, 279);
-		_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		_frame.getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("Ingrese los datos");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -171,5 +169,4 @@ public class AgregarPostreEnVenta extends Ventana {
 		
 		_frame.setVisible(true);
 	}
-
 }

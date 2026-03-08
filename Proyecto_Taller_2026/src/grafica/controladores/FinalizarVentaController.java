@@ -8,32 +8,30 @@ import java.rmi.RemoteException;
 
 public class FinalizarVentaController extends Controller {
 
-    private FinalizarVenta ventana;
+	private FinalizarVenta ventana;
 
-    public FinalizarVentaController(FinalizarVenta ven) {
-        super();
-        this.ventana = ven;
-    }
+	public FinalizarVentaController(FinalizarVenta ven) {
+		super();
+		this.ventana = ven;
+	}
 
-    public void finalizarVenta(int numeroVenta, boolean confirma) {
-        try {
-            VO_FinalizarVenta datosFinalizarVenta = new VO_FinalizarVenta(numeroVenta, confirma);
-            VO_ConfirmacionVentaFinalizada confirmacion = capaLogica.finalizarVenta(datosFinalizarVenta);
+	public void finalizarVenta(int numeroVenta, boolean confirma) {
+		try {
+			VO_FinalizarVenta datosFinalizarVenta = new VO_FinalizarVenta(numeroVenta, confirma);
+			VO_ConfirmacionVentaFinalizada confirmacion = capaLogica.finalizarVenta(datosFinalizarVenta);
 
-            if (!confirmacion.getConfirma()) {
-                ventana.mostrarExito("Venta número " + numeroVenta + " cancelada correctamente.");
-            } else if (confirmacion.getMonto() == 0) {
-                ventana.mostrarExito("Venta número " + numeroVenta + " no tenía postres, fue eliminada.");
-            } else {
-                ventana.mostrarExito("Venta finalizada. Monto total: $" + confirmacion.getMonto());
-            }
+			if (!confirmacion.getConfirma()) {
+				ventana.mostrarExito("Venta número " + numeroVenta + " cancelada correctamente.");
+			} else if (confirmacion.getMonto() == 0) {
+				ventana.mostrarExito("Venta número " + numeroVenta + " no tenía postres, fue eliminada.");
+			} else {
+				ventana.mostrarExito("Venta finalizada. Monto total: $" + confirmacion.getMonto());
+			}
 
-        } catch (NoExisteNumeroVentaException e) {
-            ventana.mostrarError("No existe venta registrada con el número ingresado.");
-        } catch (RemoteException e) {
-            ventana.mostrarError("Error de conexión con el servidor.");
-        } catch (Exception e) {
-            ventana.mostrarError("Error inesperado: " + e.getMessage());
-        }
-    }
+		} catch (NoExisteNumeroVentaException e) {
+			ventana.mostrarError(e.darMensaje());
+		} catch (Exception e) {
+			ventana.mostrarError("Ha ocurrido un error inesperado: " + e.getMessage());
+		}
+	}
 }

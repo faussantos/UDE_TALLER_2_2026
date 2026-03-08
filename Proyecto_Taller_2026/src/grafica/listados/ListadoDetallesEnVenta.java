@@ -6,16 +6,13 @@ import javax.swing.table.DefaultTableModel;
 
 import grafica.Ventana;
 import grafica.controladores.ListadoDetallesEnVentaController;
-import grafica.controladores.NuevoPostreController;
 import value_objects.VO_NumeroVenta;
-import value_objects.VO_Postre;
 import value_objects.VO_PostreCantidad;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -24,13 +21,12 @@ import java.awt.event.ActionListener;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-public class ListadoDetallesEnVenta extends Ventana{
+public class ListadoDetallesEnVenta extends Ventana {
 
 	private JTable table;
-	private JTextField textField;
+	private JTextField textFieldNumeroVenta;
 	private ListadoDetallesEnVentaController _controller;
 	private DefaultTableModel modelo;
 
@@ -54,6 +50,7 @@ public class ListadoDetallesEnVenta extends Ventana{
 	 * Create the application.
 	 */
 	public ListadoDetallesEnVenta() {
+		super("Listado detalles en venta");
 		_controller = new ListadoDetallesEnVentaController(this);
 		initialize();
 	}
@@ -62,11 +59,7 @@ public class ListadoDetallesEnVenta extends Ventana{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		_frame = new JFrame();
-		_frame.setTitle("Listado detalles en venta");
 		_frame.setBounds(100, 100, 682, 408);
-		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		_frame.getContentPane().setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("Listado de Detalles");
 		lblNewLabel.setBounds(10, 10, 648, 19);
@@ -89,6 +82,12 @@ public class ListadoDetallesEnVenta extends Ventana{
 		btnCerrar.setBounds(531, 340, 95, 21);
 		_frame.getContentPane().add(btnCerrar);
 
+		btnCerrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				_frame.dispose();
+			}
+		});
+
 		JLabel lblNewLabel_1 = new JLabel("Ingrese número de venta: ");
 		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 13));
 		lblNewLabel_1.setBounds(23, 56, 157, 17);
@@ -100,9 +99,14 @@ public class ListadoDetallesEnVenta extends Ventana{
 		btnBuscar.setBounds(324, 54, 95, 21);
 		_frame.getContentPane().add(btnBuscar);
 
+		textFieldNumeroVenta = new JTextField();
+		textFieldNumeroVenta.setBounds(176, 55, 110, 19);
+		_frame.getContentPane().add(textFieldNumeroVenta);
+		textFieldNumeroVenta.setColumns(10);
+
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String numeroVenta = "";
+				String numeroVenta = textFieldNumeroVenta.getText().trim();
 
 				if (numeroVenta.isEmpty()) {
 					mostrarError("Todos los campos son obligatorios.");
@@ -117,28 +121,16 @@ public class ListadoDetallesEnVenta extends Ventana{
 					return;
 				}
 
-				VO_NumeroVenta datosVenta = new VO_NumeroVenta(numeroVentaInt);
-				_controller.ListadoDetallesEnVenta(datosVenta);
+				_controller.ListadoDetallesEnVenta(numeroVentaInt);
 			}
 		});
 
-		// Esto agregará los datos
-		for (int i = 0; i < 100; i++) {
-			modelo.addRow(new Object[] { "123", "Flan", 50.0, "Común" });
-		}
-
-		// Esto agregará los datos
-		for (int i = 0; i < 100; i++) {
-			modelo.addRow(new Object[] { "123", "Flan", 50.0, "Común" });
-		}
-
-		textField = new JTextField();
-		textField.setBounds(176, 55, 110, 19);
-		_frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		_frame.setVisible(true);
 	}
 
 	public void mostrarDetalles(VO_PostreCantidad[] listadoDetalles) {
+		modelo.setRowCount(0);
+		
 		for (int i = 0; i < listadoDetalles.length; i++) {
 			String codigo = listadoDetalles[i].getCodigo();
 			String nombre = listadoDetalles[i].getNombre();

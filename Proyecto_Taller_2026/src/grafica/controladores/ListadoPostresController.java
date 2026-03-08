@@ -20,10 +20,8 @@ public class ListadoPostresController extends Controller {
 		try {
 			ventana.mostrarPostres(capaLogica.ListadoPostres());
 
-		} catch (InterruptedException e) {
-			ventana.mostrarError(e.getMessage());
-		} catch (RemoteException e) {
-			ventana.mostrarError(e.getMessage());
-		}
+		} catch (Exception e) {
+            ventana.mostrarError("Ha ocurrido un error inesperado: " + e.getMessage());
+        }
 	}
 }

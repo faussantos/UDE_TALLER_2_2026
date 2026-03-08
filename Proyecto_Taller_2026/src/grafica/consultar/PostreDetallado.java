@@ -3,7 +3,6 @@ package grafica.consultar;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -44,7 +43,7 @@ public class PostreDetallado extends Ventana {
 	 * Create the application.
 	 */
 	public PostreDetallado() {
-		super();
+		super("Información detallada de postre");
 		this._controller = new PostreDetalladoController(this);
 		initialize();
 	}
@@ -53,10 +52,7 @@ public class PostreDetallado extends Ventana {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		_frame.setTitle("Información detallada de postre");
 		_frame.setBounds(100, 100, 489, 357);
-		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		_frame.getContentPane().setLayout(null);
 
 		JLabel lblIngreseElCdigo = new JLabel("Ingrese el código del postre:");
 		lblIngreseElCdigo.setFont(new Font("Arial", Font.BOLD, 15));
@@ -76,6 +72,15 @@ public class PostreDetallado extends Ventana {
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.setBounds(225, 98, 85, 21);
 		_frame.getContentPane().add(btnAceptar);
+		
+		JButton btnCerrar = new JButton("Cerrar");
+		btnCerrar.setBounds(130, 98, 85, 21);
+		_frame.getContentPane().add(btnCerrar);
+		btnCerrar.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		    	_frame.dispose();
+		    }
+		});
 
 		JLabel lblNombre = new JLabel("Nombre: ");
 		lblNombre.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -97,10 +102,10 @@ public class PostreDetallado extends Ventana {
 		lblDescripcion.setBounds(10, 281, 86, 16);
 		_frame.getContentPane().add(lblDescripcion);
 
-		JLabel lblTitulo = new JLabel("Tipo:");
-		lblTitulo.setFont(new Font("Arial", Font.PLAIN, 13));
-		lblTitulo.setBounds(10, 233, 45, 13);
-		_frame.getContentPane().add(lblTitulo);
+		JLabel lblTipo = new JLabel("Tipo:");
+		lblTipo.setFont(new Font("Arial", Font.PLAIN, 13));
+		lblTipo.setBounds(10, 233, 45, 13);
+		_frame.getContentPane().add(lblTipo);
 
 		JLabel lblTituloResultado = new JLabel("Resultado:");
 		lblTituloResultado.setFont(new Font("Arial", Font.BOLD, 14));
@@ -153,26 +158,31 @@ public class PostreDetallado extends Ventana {
 		lblResultadoEndulzante.setVisible(false);
 		lblResultadoDescripcion.setVisible(false);
 		lblTituloResultado.setVisible(false);
-		lblTitulo.setVisible(false);
+		lblTipo.setVisible(false);
 		lblResultadoCodigo.setVisible(false);
 
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String codigo = textField.getText();
 
-				VO_CodigoPostre voPostre = new VO_CodigoPostre(codigo);
-
 				if (codigo.isEmpty()) {
 					mostrarError("Todos los campos son obligatorios.");
 					return;
 				}
 
-				VO_Postre datosPostre = _controller.PostreDetallado(voPostre);
+				VO_Postre datosPostre = _controller.PostreDetallado(codigo);
 
 				if (datosPostre != null) {
+					lblTituloResultado.setVisible(true);
+					
+					lblCodigo.setVisible(true);
+					lblNombre.setVisible(true);
+					lblPrecio.setVisible(true);
+					lblTipo.setVisible(true);
+					
 					lblResultadoCodigo.setVisible(true);
 					lblResultadoNombre.setVisible(true);
-					lblResultadoPrecio.setVisible(true);
+					lblResultadoPrecio.setVisible(true); 
 					lblResultadoTipo.setVisible(true);
 
 					lblResultadoCodigo.setText(datosPostre.getCodigo());
@@ -181,6 +191,9 @@ public class PostreDetallado extends Ventana {
 					lblResultadoTipo.setText(datosPostre.getTipo());
 
 					if (datosPostre.getTipo() == "Light") {
+						lblEndulzante.setVisible(true);
+						lblDescripcion.setVisible(true);
+						
 						lblResultadoEndulzante.setVisible(true);
 						lblResultadoDescripcion.setVisible(true);
 
@@ -190,5 +203,7 @@ public class PostreDetallado extends Ventana {
 				}
 			}
 		});
+
+		_frame.setVisible(true);
 	}
 }

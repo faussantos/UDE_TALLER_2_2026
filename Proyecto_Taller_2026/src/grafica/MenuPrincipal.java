@@ -40,7 +40,7 @@ public class MenuPrincipal extends Ventana{
 	 * Create the application.
 	 */
 	public MenuPrincipal() {
-		super();
+		super("Menú");
 		initialize();
 	}
 
@@ -48,8 +48,6 @@ public class MenuPrincipal extends Ventana{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		_frame = new JFrame();
-		_frame.setTitle("Menú");
 		_frame.setBounds(100, 100, 450, 300);
 		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		

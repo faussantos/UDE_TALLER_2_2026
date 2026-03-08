@@ -39,6 +39,7 @@ public class NuevaVenta extends Ventana {
 	 * Create the application.
 	 */
 	public NuevaVenta() {
+		super("Registro de venta");
 		_controller = new NuevaVentaController(this);
 		initialize();
 	}
@@ -47,11 +48,7 @@ public class NuevaVenta extends Ventana {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		_frame = new JFrame();
-		_frame.setTitle("Registro de venta");
 		_frame.setBounds(100, 100, 431, 241);
-		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		_frame.getContentPane().setLayout(null);
 		
 		JLabel lblTitulo = new JLabel("Ingrese los datos de la nueva venta:");
 		lblTitulo.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -153,5 +150,15 @@ public class NuevaVenta extends Ventana {
 		
 		_frame.setVisible(true);
 	}
+	
+	public void mensajeVentaCreada(int numeroVenta) {
 
+		String[] opciones = { "Sí", "No" };
+		int respuesta = JOptionPane.showOptionDialog(_frame,
+				"Venta número " + numeroVenta + " creada correctamente. ¿Desea agregar postres?", "Éxito",
+				JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opciones, opciones[0]);
+		if (respuesta == 0) {
+			new AgregarPostreEnVenta(numeroVenta);
+		}
+	}
 }

@@ -31,11 +31,9 @@ public class NuevoPostreController extends Controller {
 			ventana.mostrarExito("Postre ingresado correctamente");
 
 		} catch (ExistePostreException e) {
-		    ventana.mostrarError("Ya existe un postre con ese código.");
-		} catch (RemoteException e) {
-		    ventana.mostrarError("Error de conexión con el servidor.");
+		    ventana.mostrarError(e.darMensaje());
 		} catch (Exception e) {
-		    ventana.mostrarError("Error inesperado: " + e.getMessage());
-		}
+            ventana.mostrarError("Ha ocurrido un error inesperado: " + e.getMessage());
+        }
 	}
 }

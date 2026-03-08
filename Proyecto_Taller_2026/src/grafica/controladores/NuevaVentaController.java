@@ -20,9 +20,9 @@ public class NuevaVentaController extends Controller {
 			int numeroVenta = capaLogica.inicioVenta(datosVenta);
 			ventana.mensajeVentaCreada(numeroVenta);
 		} catch (FechaMayorUltimaVentaException e) {
-			ventana.mostrarError("La fecha ingresada NO puede ser mayor a la de la última venta");
+			ventana.mostrarError(e.darMensaje());
 		} catch (Exception e) {
-		    ventana.mostrarError("Error inesperado: " + e.getMessage());
-		}
+            ventana.mostrarError("Ha ocurrido un error inesperado: " + e.getMessage());
+        }
 	}
 }

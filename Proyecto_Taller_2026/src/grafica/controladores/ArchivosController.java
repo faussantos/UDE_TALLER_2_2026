@@ -17,9 +17,9 @@ public class ArchivosController extends Controller {
             capaLogica.respaldarDatos();
             ventana.mostrarExito("Datos respaldados correctamente.");
         } catch (PersistenciaException e) {
-            ventana.mostrarError("Error al respaldar los datos: " + e.getMessage());
+            ventana.mostrarError("Error al respaldar los datos: " + e.darMensaje());
         } catch (Exception e) {
-            ventana.mostrarError("Error inesperado: " + e.getMessage());
+            ventana.mostrarError("Ha ocurrido un error inesperado: " + e.getMessage());
         }
     }
 
@@ -28,11 +28,11 @@ public class ArchivosController extends Controller {
             capaLogica.recuperarDatos();
             ventana.mostrarExito("Datos recuperados correctamente.");
         } catch (PersistenciaException e) {
-            ventana.mostrarError("Error al recuperar los datos: " + e.getMessage());
+            ventana.mostrarError("Error al recuperar los datos: " + e.darMensaje());
         } catch (ClassNotFoundException e) {
             ventana.mostrarError("Error al leer el archivo de datos.");
         } catch (Exception e) {
-            ventana.mostrarError("Error inesperado: " + e.getMessage());
+            ventana.mostrarError("Ha ocurrido un error inesperado: " + e.getMessage());
         }
     }
 }

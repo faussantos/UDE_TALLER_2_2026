@@ -1,7 +1,5 @@
 package grafica.controladores;
 
-import java.rmi.RemoteException;
-
 import excepciones.IndicacionInvalidaException;
 import grafica.listados.*;
 import value_objects.*;
@@ -21,13 +19,11 @@ public class ListadoVentasController extends Controller {
 			VO_VentaCompleto[] ventas = capaLogica.listadoVentas(datosIndicacion);
 			ventana.mostrarVentas(ventas);
 		} catch (IndicacionInvalidaException e) {
-			ventana.mostrarError(e.getMessage());
-		} catch (RemoteException e) {
-			ventana.mostrarError("Error de conexión con el servidor.");
+			ventana.mostrarError(e.darMensaje());
 		} catch (NullPointerException e) {
-			ventana.mostrarError("No hay ventas cargadas");
+			ventana.mostrarError("No existen registros del tipo de venta seleccionado");
 		} catch (Exception e) {
-			ventana.mostrarError("Error inesperado: " + e.getMessage());
+			ventana.mostrarError("Ha ocurrido un error inesperado: " + e.getMessage());
 		}
 	}
 }

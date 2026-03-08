@@ -24,19 +24,17 @@ public class AgregarPostreEnVentaController extends Controller {
             capaLogica.agregarPostreEnVenta(datosDetalle);
             ventana.mostrarExito("Postre agregado correctamente a la venta número " + numeroVenta);
         } catch (CantidadNegativaException e) {
-            ventana.mostrarError(e.getMessage());
+            ventana.mostrarError(e.darMensaje());
         } catch (CantidadMayor40Exception e) {
-            ventana.mostrarError(e.getMessage());
+            ventana.mostrarError(e.darMensaje());
         } catch (NoExistePostreException e) {
-            ventana.mostrarError(e.getMessage());
+            ventana.mostrarError(e.darMensaje());
         } catch (NoExisteNumeroVentaException e) {
-            ventana.mostrarError(e.getMessage());
+            ventana.mostrarError(e.darMensaje());
         } catch (VentaNoEnProcesoException e) {
-            ventana.mostrarError(e.getMessage());
-        } catch (RemoteException e) {
-            ventana.mostrarError("Error de conexión con el servidor.");
+            ventana.mostrarError(e.darMensaje());
         } catch (Exception e) {
-            ventana.mostrarError("Error inesperado: " + e.getMessage());
+            ventana.mostrarError("Ha ocurrido un error inesperado: " + e.getMessage());
         }
     }
 }

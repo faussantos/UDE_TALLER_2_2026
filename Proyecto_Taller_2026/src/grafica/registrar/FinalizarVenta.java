@@ -43,11 +43,13 @@ public class FinalizarVenta extends Ventana{
 	 * Create the application.
 	 */
 	public FinalizarVenta() {
+		super("Finalizar venta");
 	    _controller = new FinalizarVentaController(this);
 		initialize();
 	}
 	
 	public FinalizarVenta(int numeroVenta) {
+		super("Finalizar venta");
 	    _controller = new FinalizarVentaController(this);
 	    initialize();
 	    textFieldNumeroVenta.setText(String.valueOf(numeroVenta));
@@ -59,11 +61,7 @@ public class FinalizarVenta extends Ventana{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		_frame = new JFrame();
-		_frame.setTitle("Finalizar venta");
 		_frame.setBounds(100, 100, 450, 300);
-		_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		_frame.getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Ingrese el numero que identifica a la venta");
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 15));
@@ -129,6 +127,12 @@ public class FinalizarVenta extends Ventana{
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(10, 232, 85, 21);
 		_frame.getContentPane().add(btnCancelar);
+		
+		btnCancelar.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		    	_frame.dispose();
+		    }
+		});
 		
 		_frame.setVisible(true);
 

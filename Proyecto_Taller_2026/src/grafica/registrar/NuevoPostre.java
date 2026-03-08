@@ -46,6 +46,7 @@ public class NuevoPostre extends Ventana {
 	 * Create the application.
 	 */
 	public NuevoPostre() {
+		super("Registro de postre");
 		_controller = new NuevoPostreController(this);
 		initialize();
 	}
@@ -54,12 +55,8 @@ public class NuevoPostre extends Ventana {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		_frame = new JFrame();
-		_frame.setTitle("Registro de postre");
 		_frame.setBounds(100, 100, 479, 384);
-		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		_frame.getContentPane().setLayout(null);
-
+		
 		// TITULO
 		JLabel lblNewLabel_1 = new JLabel("Ingrese los datos del nuevo postre");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);

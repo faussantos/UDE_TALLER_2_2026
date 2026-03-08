@@ -119,7 +119,7 @@ public class Ventas implements Serializable{
 				if (venta.ExisteDetalle(datos.getCodigo())) {
 					DetalleVenta detalleBuscado = venta.getDetalle(datos.getCodigo());
 					cantidad += detalleBuscado.getCantidad();
-					monto += detalleBuscado.getPostre().getPrecio();
+					monto += detalleBuscado.getPostre().getPrecio() * detalleBuscado.getCantidad();
 				}
 			}
 		}
