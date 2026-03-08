@@ -12,10 +12,10 @@ import persistencia.Persistencia;
 import value_objects.*;
 import excepciones.*;
 
-public class CapaLogica extends UnicastRemoteObject implements ICapaLogica{
+public class CapaLogica extends UnicastRemoteObject implements ICapaLogica {
 
 	private static CapaLogica instancia;
-	
+
 	private Ventas secVentas;
 	private Postres dicPostres;
 	private Monitor monitor;
@@ -29,17 +29,17 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica{
 	}
 
 	public static CapaLogica getInstancia() throws RemoteException {
-		
-		if(instancia == null)
+
+		if (instancia == null)
 			instancia = new CapaLogica();
-		
+
 		return instancia;
 	}
-	
-	public void AltaPostre(VO_Postre datosPostre) throws ExistePostreException, InterruptedException, RemoteException  {
-		
+
+	public void AltaPostre(VO_Postre datosPostre) throws ExistePostreException, InterruptedException, RemoteException {
+
 		monitor.comienzoEscritura();
-		
+
 		if (dicPostres.Member(datosPostre.getCodigo())) {
 			monitor.terminoEscritura();
 			String msg = "El código ingresado ya está registrado para un postre";
@@ -67,19 +67,19 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica{
 		return resultado;
 	}
 
-	public VO_Postre detallePostre(VO_CodigoPostre codigoPostre) throws NoExistePostreException, InterruptedException  {
+	public VO_Postre detallePostre(VO_CodigoPostre codigoPostre) throws NoExistePostreException, InterruptedException {
 
 		monitor.comienzoLectura();
-		
+
 		if (!dicPostres.Member(codigoPostre.getCodigoPostre())) {
 			monitor.terminoLectura();
 			throw new NoExistePostreException("El código ingresado no está registrado para ningún postre");
 		}
-		
+
 		Postre postreBuscado = dicPostres.Find(codigoPostre.getCodigoPostre());
 
 		VO_Postre datosDevolver;
-		
+
 		if (postreBuscado instanceof Light) {
 			datosDevolver = new VO_Light(postreBuscado.getCodigo(), postreBuscado.getNombre(),
 					postreBuscado.getPrecio(), ((Light) postreBuscado).getEndulzante(),
@@ -95,38 +95,38 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica{
 	}
 
 	public int inicioVenta(VO_VentaBasico datosVenta) throws FechaMayorUltimaVentaException, InterruptedException {
-		
+
 		monitor.comienzoEscritura();
-		
+
 		Venta ultimaVenta = secVentas.getUltimaVenta();
 		if (ultimaVenta != null && ultimaVenta.getFecha().isBefore(datosVenta.getFecha())) {
 			monitor.terminoEscritura();
-			throw new FechaMayorUltimaVentaException("La fecha de la nueva venta no puede ser menor que la de la última venta registrada");
+			throw new FechaMayorUltimaVentaException(
+					"La fecha de la nueva venta no puede ser menor que la de la última venta registrada");
 		}
 
 		Venta nuevaVenta = new Venta(datosVenta.getFecha(), datosVenta.getDireccion(), true, 0);
 
 		int numeroVenta;
-		if (secVentas.EsVacia())
-		{
+		if (secVentas.EsVacia()) {
 			numeroVenta = 1;
 			nuevaVenta.setNumero(numeroVenta);
-		}
-		else {
+		} else {
 			numeroVenta = ultimaVenta.getNumero() + 1;
 			nuevaVenta.setNumero(numeroVenta);
 		}
-		
+
 		secVentas.InsBack(nuevaVenta);
 		monitor.terminoEscritura();
 		return numeroVenta;
 	}
 
-	public void agregarPostreEnVenta(VO_DetalleVenta datosDetalle) throws CantidadNegativaException,
-			CantidadMayor40Exception, NoExistePostreException, NoExisteNumeroVentaException, VentaNoEnProcesoException, InterruptedException {
+	public void agregarPostreEnVenta(VO_DetalleVenta datosDetalle)
+			throws CantidadNegativaException, CantidadMayor40Exception, NoExistePostreException,
+			NoExisteNumeroVentaException, VentaNoEnProcesoException, InterruptedException {
 
 		monitor.comienzoEscritura();
-		
+
 		if (datosDetalle.getCantidad() <= 0) {
 			monitor.terminoEscritura();
 			throw new CantidadNegativaException("La cantidad ingresada debe ser mayor a 0");
@@ -153,27 +153,31 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica{
 
 		if ((ventaBuscada.getTotalUnidades() + datosDetalle.getCantidad()) > 40) {
 			monitor.terminoEscritura();
-			throw new CantidadMayor40Exception("La suma total de cantidades de una venta no puede superar las 40 unidades");
+			throw new CantidadMayor40Exception(
+					"La suma total de cantidades de una venta no puede superar las 40 unidades");
 		}
 
 		if (ventaBuscada.ExisteDetalle(datosDetalle.getCodigoPostre())) {
 			DetalleVenta detalleBuscado = ventaBuscada.getDetalle(datosDetalle.getCodigoPostre());
 			detalleBuscado.setCantidad(detalleBuscado.getCantidad() + datosDetalle.getCantidad());
+			ventaBuscada.setMonto(ventaBuscada.totalMontoDetalles());
+
 		} else {
 			Postre ingresarPostre = dicPostres.Find(datosDetalle.getCodigoPostre());
 			DetalleVenta nuevoDetalle = new DetalleVenta(datosDetalle.getCantidad(), ingresarPostre);
 			ventaBuscada.InsertarDetalle(nuevoDetalle);
+			ventaBuscada.setMonto(ventaBuscada.totalMontoDetalles());
 
 		}
-		secVentas.Modify(ventaBuscada);
+
 		monitor.terminoEscritura();
 	}
 
 	public void eliminarPostreEnVenta(VO_DetalleVenta datosDetalle) throws CantidadNegativaException,
-			NoExisteNumeroVentaException, NoExistePostreException, VentaNoEnProcesoException, InterruptedException  {
+			NoExisteNumeroVentaException, NoExistePostreException, VentaNoEnProcesoException, InterruptedException {
 
 		monitor.comienzoEscritura();
-		
+
 		if (datosDetalle.getCantidad() <= 0) {
 			monitor.terminoEscritura();
 			throw new CantidadNegativaException("La cantidad ingresada debe ser mayor a 0");
@@ -200,18 +204,21 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica{
 		int cantidadActual = detalle.getCantidad();
 		int cantidadEliminar = datosDetalle.getCantidad();
 
-		if (cantidadEliminar >= cantidadActual)
+		if (cantidadEliminar >= cantidadActual) {
 			venta.BorrarDetalle(detalle.getPostre().getCodigo());
-		else
+			venta.setMonto(venta.totalMontoDetalles());
+		} else {
 			detalle.setCantidad(cantidadActual - cantidadEliminar);
-		
-		monitor.terminoEscritura();
+			venta.setMonto(venta.totalMontoDetalles());
 
+		}
+
+		monitor.terminoEscritura();
 	}
 
 	public VO_ConfirmacionVentaFinalizada finalizarVenta(VO_FinalizarVenta datosFinalizarVenta)
 			throws NoExisteNumeroVentaException, InterruptedException {
-		
+
 		monitor.comienzoEscritura();
 
 		double monto = 0.0;
@@ -227,21 +234,22 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica{
 			ventaBuscada.setEnProceso(false);
 			monto = ventaBuscada.getMonto();
 		}
-		
+
 		monitor.terminoEscritura();
 		return new VO_ConfirmacionVentaFinalizada(monto, datosFinalizarVenta.getConfirma());
 	}
 
-	public VO_VentaCompleto[] listadoVentas(VO_IndicacionListado datosIndicacion) throws IndicacionInvalidaException, InterruptedException {
+	public VO_VentaCompleto[] listadoVentas(VO_IndicacionListado datosIndicacion)
+			throws IndicacionInvalidaException, InterruptedException {
 
 		monitor.comienzoLectura();
-		
+
 		Set<Character> indicacionesValidas = Set.of('T', 'P', 'F');
 		if (!indicacionesValidas.contains(datosIndicacion.getIndicacion())) {
 			monitor.terminoLectura();
 			throw new IndicacionInvalidaException("El caracter ingresado no corresponde con ninguna indicacion");
 		}
-		
+
 		VO_VentaCompleto[] resultado;
 
 		if (datosIndicacion.getIndicacion() == 'T')
@@ -250,16 +258,16 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica{
 			resultado = secVentas.ListarVentasEnProceso();
 		else
 			resultado = secVentas.ListarVentasEnFinalizadas();
-		
+
 		monitor.terminoLectura();
 		return resultado;
 	}
 
 	public VO_PostreCantidad[] listadoPostresEnVenta(VO_NumeroVenta datosNumeroVenta)
-			throws NoExisteNumeroVentaException, InterruptedException  {
-		
+			throws NoExisteNumeroVentaException, InterruptedException {
+
 		monitor.comienzoLectura();
-		
+
 		if (!secVentas.Member(datosNumeroVenta.getNumero())) {
 			monitor.terminoLectura();
 			throw new NoExisteNumeroVentaException("No existe venta registrada con el número ingresado");
@@ -267,14 +275,14 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica{
 
 		Venta ventaBuscada = secVentas.Find(datosNumeroVenta.getNumero());
 		VO_PostreCantidad[] resultado = ventaBuscada.ListarPostres();
-		
+
 		monitor.terminoLectura();
 		return resultado;
 	}
 
 	public VO_CantidadMonto totalMontoPostreYFecha(VO_PostreFecha datos)
-			throws FechaMayorHoyException, NoExistePostreException, InterruptedException  {
-		
+			throws FechaMayorHoyException, NoExistePostreException, InterruptedException {
+
 		monitor.comienzoLectura();
 
 		if (!dicPostres.Member(datos.getCodigo())) {
@@ -289,12 +297,12 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica{
 
 		VO_CantidadMonto resultado = secVentas.totalMontoPostreYFecha(datos);
 		monitor.terminoLectura();
-		return resultado;	
-		
+		return resultado;
+
 	}
 
 	public void respaldarDatos() throws PersistenciaException, InterruptedException {
-		
+
 		monitor.comienzoLectura();
 		VO_Persistencia datosRespaldar = new VO_Persistencia(dicPostres, secVentas);
 		persistencia.respaldar("datos.dat", datosRespaldar);
@@ -302,7 +310,7 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica{
 	}
 
 	public void recuperarDatos() throws ClassNotFoundException, PersistenciaException, InterruptedException {
-		
+
 		monitor.comienzoEscritura();
 		VO_Persistencia datosRecuperados = persistencia.recuperar("datos.dat");
 

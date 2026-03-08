@@ -97,6 +97,7 @@ public class NuevaVenta {
 		for(String mes : meses) {
 			AUX_Mes mesItem = new AUX_Mes(numeroMes, mes);
 			comboMes.addItem(mesItem);
+			numeroMes++;
 		}
 		comboMes.setBounds(167, 92, 89, 21);
 		frmRegistroDeVenta.getContentPane().add(comboMes);

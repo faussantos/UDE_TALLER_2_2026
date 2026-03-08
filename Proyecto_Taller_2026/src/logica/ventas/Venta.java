@@ -62,6 +62,10 @@ public class Venta implements Serializable{
 		
 		return detalleDevolver;
 	}
+	
+	public void setMonto (double mont) {
+		monto = mont;
+	}
 
 	public boolean ExisteDetalle(String codigo) {
 		boolean existe = false;
@@ -129,7 +133,13 @@ public class Venta implements Serializable{
 		return null;
 	}
 	
-	
+	public double totalMontoDetalles() {
+		double monto = 0;
+		for(DetalleVenta detalle : detalles) {
+			monto = monto + detalle.precioUnitPostre() * detalle.getCantidad();
+		}
+		return monto;
+	}
 }
 
 

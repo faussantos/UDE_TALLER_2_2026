@@ -75,7 +75,12 @@ public class ListadoVentas {
 		frmListadoDeVentas.getContentPane().add(scrollPane);
 
 		String[] columnas = { "Número", "Fecha", "Dirección", "Monto", "Estado" };
-		modelo = new DefaultTableModel(columnas, 0);
+		modelo = new DefaultTableModel(columnas, 0) {
+			    @Override
+			    public boolean isCellEditable(int row, int column) {
+			        return false;
+			    }
+		};
 		table = new JTable(modelo);
 		table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 12));
 		table.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -88,6 +93,11 @@ public class ListadoVentas {
 		table.getColumnModel().getColumn(4).setPreferredWidth(50);
 
 		JButton btnCerrar = new JButton("Cerrar");
+		btnCerrar.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		    	frmListadoDeVentas.dispose();
+		    }
+		});
 		btnCerrar.setBounds(603, 337, 95, 21);
 		frmListadoDeVentas.getContentPane().add(btnCerrar);
 

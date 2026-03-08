@@ -17,8 +17,6 @@ public class PostreDetalladoController extends Controller {
 		VO_Postre detallePostre = null;
 		try {
 			detallePostre = capaLogica.detallePostre(datosPostre);
-			ventana.mostrarPostreDetallado(detallePostre);
-
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

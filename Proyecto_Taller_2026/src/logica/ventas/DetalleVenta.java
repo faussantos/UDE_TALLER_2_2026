@@ -27,4 +27,7 @@ public class DetalleVenta implements Serializable{
 		this.cantidad = cantidad;
 	}
 
+	public double precioUnitPostre () {
+		return postre.getPrecio();
+	}
 }
