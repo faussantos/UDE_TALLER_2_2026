@@ -12,15 +12,15 @@ import java.awt.event.ActionListener;
 
 import javax.swing.SwingConstants;
 
+import grafica.Ventana;
 import grafica.controladores.AgregarPostreEnVentaController;
 
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 
-public class AgregarPostreEnVenta {
+public class AgregarPostreEnVenta extends Ventana {
 
-	private JFrame frmAgregarPostreA;
 	private JTextField textFieldCodigoPostre;
 	private JTextField textFieldNumeroVenta;
 	AgregarPostreEnVentaController _controller;
@@ -33,7 +33,7 @@ public class AgregarPostreEnVenta {
 			public void run() {
 				try {
 					AgregarPostreEnVenta window = new AgregarPostreEnVenta();
-					window.frmAgregarPostreA.setVisible(true);
+					window._frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -54,55 +54,55 @@ public class AgregarPostreEnVenta {
 		_controller = new AgregarPostreEnVentaController(this);
 	    textFieldNumeroVenta.setText(String.valueOf(numeroVenta));
 	    textFieldNumeroVenta.setEditable(false);
-	    frmAgregarPostreA.setVisible(true);
+	    _frame.setVisible(true);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmAgregarPostreA = new JFrame();
-		frmAgregarPostreA.setTitle("Agregar postre a venta");
-		frmAgregarPostreA.setBounds(100, 100, 440, 279);
-		frmAgregarPostreA.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frmAgregarPostreA.getContentPane().setLayout(null);
+		_frame = new JFrame();
+		_frame.setTitle("Agregar postre a venta");
+		_frame.setBounds(100, 100, 440, 279);
+		_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		_frame.getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("Ingrese los datos");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 15));
 		lblNewLabel_1.setBounds(10, 10, 134, 22);
-		frmAgregarPostreA.getContentPane().add(lblNewLabel_1);
+		_frame.getContentPane().add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Código de postre:");
 		lblNewLabel_2.setFont(new Font("Arial", Font.PLAIN, 13));
 		lblNewLabel_2.setBounds(20, 95, 124, 16);
-		frmAgregarPostreA.getContentPane().add(lblNewLabel_2);
+		_frame.getContentPane().add(lblNewLabel_2);
 		
 		textFieldCodigoPostre = new JTextField();
 		textFieldCodigoPostre.setColumns(10);
 		textFieldCodigoPostre.setBounds(141, 94, 189, 19);
-		frmAgregarPostreA.getContentPane().add(textFieldCodigoPostre);
+		_frame.getContentPane().add(textFieldCodigoPostre);
 		
 		JLabel lblNewLabel_2_1 = new JLabel("Cantidad de unidades:");
 		lblNewLabel_2_1.setFont(new Font("Arial", Font.PLAIN, 13));
 		lblNewLabel_2_1.setBounds(20, 68, 134, 16);
-		frmAgregarPostreA.getContentPane().add(lblNewLabel_2_1);
+		_frame.getContentPane().add(lblNewLabel_2_1);
 		
 		JComboBox<Integer> comboBox = new JComboBox<>();
 		for(int i = 1 ; i<=40; i++ ) {
 			comboBox.addItem(i);
 		}
 		comboBox.setBounds(164, 66, 50, 21);
-		frmAgregarPostreA.getContentPane().add(comboBox);
+		_frame.getContentPane().add(comboBox);
 		
 		JLabel lblNewLabel_2_2 = new JLabel("Numero de venta:");
 		lblNewLabel_2_2.setFont(new Font("Arial", Font.PLAIN, 13));
 		lblNewLabel_2_2.setBounds(20, 40, 112, 16);
-		frmAgregarPostreA.getContentPane().add(lblNewLabel_2_2);
+		_frame.getContentPane().add(lblNewLabel_2_2);
 		
 		textFieldNumeroVenta = new JTextField();
 		textFieldNumeroVenta.setBounds(133, 39, 22, 19);
-		frmAgregarPostreA.getContentPane().add(textFieldNumeroVenta);
+		_frame.getContentPane().add(textFieldNumeroVenta);
 		textFieldNumeroVenta.setColumns(10);
 		
 		JButton btnFinalizarVenta = new JButton("Finalizar venta");
@@ -127,7 +127,7 @@ public class AgregarPostreEnVenta {
 		    }
 		});
 		btnFinalizarVenta.setBounds(292, 179, 124, 21);
-		frmAgregarPostreA.getContentPane().add(btnFinalizarVenta);
+		_frame.getContentPane().add(btnFinalizarVenta);
 		
 		JButton btnAgregarPostre = new JButton("Agregar Postre");
 		btnAgregarPostre.addActionListener(new ActionListener() {
@@ -158,26 +158,18 @@ public class AgregarPostreEnVenta {
 		    }
 		});
 		btnAgregarPostre.setBounds(150, 179, 132, 21);
-		frmAgregarPostreA.getContentPane().add(btnAgregarPostre);
+		_frame.getContentPane().add(btnAgregarPostre);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		        frmAgregarPostreA.dispose();
+		        _frame.dispose();
 		    }
 		});
 		btnCancelar.setBounds(10, 179, 85, 21);
-		frmAgregarPostreA.getContentPane().add(btnCancelar);
-	}
-	
-	public void mostrarError(String mensaje) {
-	    JOptionPane.showMessageDialog(frmAgregarPostreA, mensaje,
-	        "Error", JOptionPane.ERROR_MESSAGE);
-	}
-
-	public void mostrarExito(String mensaje) {
-	    JOptionPane.showMessageDialog(frmAgregarPostreA, mensaje,
-	        "Éxito", JOptionPane.INFORMATION_MESSAGE);
+		_frame.getContentPane().add(btnCancelar);
+		
+		_frame.setVisible(true);
 	}
 
 }

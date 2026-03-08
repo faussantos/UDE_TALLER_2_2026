@@ -19,7 +19,7 @@ public class ListadoVentasController extends Controller {
 		try {
 			VO_IndicacionListado datosIndicacion = new VO_IndicacionListado(indicacion);
 			VO_VentaCompleto[] ventas = capaLogica.listadoVentas(datosIndicacion);
-			ventana.cargarDatos(ventas);
+			ventana.mostrarVentas(ventas);
 		} catch (IndicacionInvalidaException e) {
 			ventana.mostrarError(e.getMessage());
 		} catch (RemoteException e) {

@@ -18,7 +18,7 @@ public class NuevaVentaController extends Controller {
 		try {
 			VO_VentaBasico datosVenta = new VO_VentaBasico(fecha, direccion);
 			int numeroVenta = capaLogica.inicioVenta(datosVenta);
-			ventana.mostrarExito(numeroVenta);
+			ventana.mensajeVentaCreada(numeroVenta);
 		} catch (FechaMayorUltimaVentaException e) {
 			ventana.mostrarError("La fecha ingresada NO puede ser mayor a la de la última venta");
 		} catch (Exception e) {

@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import grafica.Ventana;
 import grafica.controladores.NuevoPostreController;
 
 import javax.swing.JTextField;
@@ -16,9 +17,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.event.*;
 
-public class NuevoPostre {
+public class NuevoPostre extends Ventana {
 
-	private JFrame frmRegistroDePostre;
 	private JTextField textFieldCodigoPostre;
 	private JTextField textFieldNombrePostre;
 	private JTextField textFieldPrecio;
@@ -34,7 +34,7 @@ public class NuevoPostre {
 			public void run() {
 				try {
 					NuevoPostre window = new NuevoPostre();
-					window.frmRegistroDePostre.setVisible(true);
+					window._frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -54,28 +54,28 @@ public class NuevoPostre {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmRegistroDePostre = new JFrame();
-		frmRegistroDePostre.setTitle("Registro de postre");
-		frmRegistroDePostre.setBounds(100, 100, 479, 384);
-		frmRegistroDePostre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmRegistroDePostre.getContentPane().setLayout(null);
+		_frame = new JFrame();
+		_frame.setTitle("Registro de postre");
+		_frame.setBounds(100, 100, 479, 384);
+		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		_frame.getContentPane().setLayout(null);
 
 		// TITULO
 		JLabel lblNewLabel_1 = new JLabel("Ingrese los datos del nuevo postre");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 15));
 		lblNewLabel_1.setBounds(10, 32, 270, 22);
-		frmRegistroDePostre.getContentPane().add(lblNewLabel_1);
+		_frame.getContentPane().add(lblNewLabel_1);
 
 		// CODIGO POSTRE
 		JLabel lblCodigoPostre = new JLabel("Código:");
 		lblCodigoPostre.setFont(new Font("Arial", Font.PLAIN, 13));
 		lblCodigoPostre.setBounds(39, 69, 86, 16);
-		frmRegistroDePostre.getContentPane().add(lblCodigoPostre);
+		_frame.getContentPane().add(lblCodigoPostre);
 
 		textFieldCodigoPostre = new JTextField();
 		textFieldCodigoPostre.setBounds(114, 68, 250, 19);
-		frmRegistroDePostre.getContentPane().add(textFieldCodigoPostre);
+		_frame.getContentPane().add(textFieldCodigoPostre);
 		textFieldCodigoPostre.setColumns(10);
 		// CODIGO POSTRE
 
@@ -83,63 +83,63 @@ public class NuevoPostre {
 		JLabel lblNombrePostre = new JLabel("Nombre: ");
 		lblNombrePostre.setFont(new Font("Arial", Font.PLAIN, 13));
 		lblNombrePostre.setBounds(39, 97, 86, 16);
-		frmRegistroDePostre.getContentPane().add(lblNombrePostre);
+		_frame.getContentPane().add(lblNombrePostre);
 
 		textFieldNombrePostre = new JTextField();
 		textFieldNombrePostre.setColumns(10);
 		textFieldNombrePostre.setBounds(114, 96, 250, 19);
-		frmRegistroDePostre.getContentPane().add(textFieldNombrePostre);
+		_frame.getContentPane().add(textFieldNombrePostre);
 		// NOMBRE POSTRE
 
 		// PRECIO
 		JLabel lblPrecio = new JLabel("Precio:");
 		lblPrecio.setFont(new Font("Arial", Font.PLAIN, 13));
 		lblPrecio.setBounds(39, 124, 86, 16);
-		frmRegistroDePostre.getContentPane().add(lblPrecio);
+		_frame.getContentPane().add(lblPrecio);
 
 		textFieldPrecio = new JTextField();
 		textFieldPrecio.setColumns(10);
 		textFieldPrecio.setBounds(114, 123, 250, 19);
-		frmRegistroDePostre.getContentPane().add(textFieldPrecio);
+		_frame.getContentPane().add(textFieldPrecio);
 		// PRECIO
 
 		// CHECKBOX LIGHT
 		JCheckBox chckbxLight = new JCheckBox("Light");
 		chckbxLight.setFont(new Font("Arial", Font.PLAIN, 13));
 		chckbxLight.setBounds(114, 165, 93, 21);
-		frmRegistroDePostre.getContentPane().add(chckbxLight);
+		_frame.getContentPane().add(chckbxLight);
 		// CHECKBOX LIGHT
 
 		// DATOS LIGHT
 		JLabel lblEndulzante = new JLabel("Endulzante:");
 		lblEndulzante.setFont(new Font("Arial", Font.PLAIN, 13));
 		lblEndulzante.setBounds(20, 213, 86, 16);
-		frmRegistroDePostre.getContentPane().add(lblEndulzante);
+		_frame.getContentPane().add(lblEndulzante);
 
 		JLabel lblDescripcion = new JLabel("Descirpción:");
 		lblDescripcion.setFont(new Font("Arial", Font.PLAIN, 13));
 		lblDescripcion.setBounds(20, 250, 86, 16);
-		frmRegistroDePostre.getContentPane().add(lblDescripcion);
+		_frame.getContentPane().add(lblDescripcion);
 
 		txtFieldEndulzante = new JTextField();
 		txtFieldEndulzante.setColumns(10);
 		txtFieldEndulzante.setBounds(114, 210, 250, 19);
-		frmRegistroDePostre.getContentPane().add(txtFieldEndulzante);
+		_frame.getContentPane().add(txtFieldEndulzante);
 
 		txtFieldDescripcion = new JTextField();
 		txtFieldDescripcion.setColumns(10);
 		txtFieldDescripcion.setBounds(114, 247, 250, 19);
-		frmRegistroDePostre.getContentPane().add(txtFieldDescripcion);
+		_frame.getContentPane().add(txtFieldDescripcion);
 		// DATOS LIGHT
 
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frmRegistroDePostre.dispose();
+				_frame.dispose();
 			}
 		});
 		btnCancelar.setBounds(10, 316, 85, 21);
-		frmRegistroDePostre.getContentPane().add(btnCancelar);
+		_frame.getContentPane().add(btnCancelar);
 
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
@@ -175,7 +175,7 @@ public class NuevoPostre {
 			}
 		});
 		btnAceptar.setBounds(367, 316, 85, 21);
-		frmRegistroDePostre.getContentPane().add(btnAceptar);
+		_frame.getContentPane().add(btnAceptar);
 
 		lblEndulzante.setVisible(false);
 		txtFieldEndulzante.setVisible(false);
@@ -192,14 +192,6 @@ public class NuevoPostre {
 			}
 		});
 
-		frmRegistroDePostre.setVisible(true);
-	}
-
-	public void mostrarError(String mensaje) {
-		JOptionPane.showMessageDialog(frmRegistroDePostre, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
-	}
-
-	public void mostrarExito(String mensaje) {
-		JOptionPane.showMessageDialog(frmRegistroDePostre, mensaje, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+		_frame.setVisible(true);
 	}
 }

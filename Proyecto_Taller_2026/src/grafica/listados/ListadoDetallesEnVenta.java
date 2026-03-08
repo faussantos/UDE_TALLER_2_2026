@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.table.DefaultTableModel;
 
+import grafica.Ventana;
 import grafica.controladores.ListadoDetallesEnVentaController;
 import grafica.controladores.NuevoPostreController;
 import value_objects.VO_NumeroVenta;
@@ -26,9 +27,8 @@ import javax.swing.JTable;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-public class ListadoDetallesEnVenta {
+public class ListadoDetallesEnVenta extends Ventana{
 
-	private JFrame frmListadoDetallesEnVenta;
 	private JTable table;
 	private JTextField textField;
 	private ListadoDetallesEnVentaController _controller;
@@ -42,7 +42,7 @@ public class ListadoDetallesEnVenta {
 			public void run() {
 				try {
 					ListadoDetallesEnVenta window = new ListadoDetallesEnVenta();
-					window.frmListadoDetallesEnVenta.setVisible(true);
+					window._frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -62,21 +62,21 @@ public class ListadoDetallesEnVenta {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmListadoDetallesEnVenta = new JFrame();
-		frmListadoDetallesEnVenta.setTitle("Listado detalles en venta");
-		frmListadoDetallesEnVenta.setBounds(100, 100, 682, 408);
-		frmListadoDetallesEnVenta.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmListadoDetallesEnVenta.getContentPane().setLayout(null);
+		_frame = new JFrame();
+		_frame.setTitle("Listado detalles en venta");
+		_frame.setBounds(100, 100, 682, 408);
+		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		_frame.getContentPane().setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("Listado de Detalles");
 		lblNewLabel.setBounds(10, 10, 648, 19);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
-		frmListadoDetallesEnVenta.getContentPane().add(lblNewLabel);
+		_frame.getContentPane().add(lblNewLabel);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(33, 85, 593, 200);
-		frmListadoDetallesEnVenta.getContentPane().add(scrollPane);
+		_frame.getContentPane().add(scrollPane);
 
 		String[] columnas = { "Código", "Nombre", "Precio", "Tipo", "Cantidad" };
 		modelo = new DefaultTableModel(columnas, 0);
@@ -87,18 +87,18 @@ public class ListadoDetallesEnVenta {
 
 		JButton btnCerrar = new JButton("Cerrar");
 		btnCerrar.setBounds(531, 340, 95, 21);
-		frmListadoDetallesEnVenta.getContentPane().add(btnCerrar);
+		_frame.getContentPane().add(btnCerrar);
 
 		JLabel lblNewLabel_1 = new JLabel("Ingrese número de venta: ");
 		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 13));
 		lblNewLabel_1.setBounds(23, 56, 157, 17);
-		frmListadoDetallesEnVenta.getContentPane().add(lblNewLabel_1);
+		_frame.getContentPane().add(lblNewLabel_1);
 
 		ButtonGroup grupo = new ButtonGroup();
 
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.setBounds(324, 54, 95, 21);
-		frmListadoDetallesEnVenta.getContentPane().add(btnBuscar);
+		_frame.getContentPane().add(btnBuscar);
 
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -134,7 +134,7 @@ public class ListadoDetallesEnVenta {
 
 		textField = new JTextField();
 		textField.setBounds(176, 55, 110, 19);
-		frmListadoDetallesEnVenta.getContentPane().add(textField);
+		_frame.getContentPane().add(textField);
 		textField.setColumns(10);
 	}
 
@@ -148,8 +148,5 @@ public class ListadoDetallesEnVenta {
 
 			modelo.addRow(new Object[] { codigo, nombre, precio, tipo, cantidad });
 		}
-	}
-	public void mostrarError(String mensaje) {
-		JOptionPane.showMessageDialog(frmListadoDetallesEnVenta, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
 	}
 }

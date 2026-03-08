@@ -9,15 +9,16 @@ import javax.swing.JMenuItem;
 
 import grafica.registrar.*;
 import grafica.consultar.*;
+import grafica.controladores.ArchivosController;
 import grafica.listados.*;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MenuPrincipal {
+public class MenuPrincipal extends Ventana{
 
-	private JFrame frmMen;
+	ArchivosController _controller = new ArchivosController(this);
 
 	/**
 	 * Launch the application.
@@ -27,7 +28,7 @@ public class MenuPrincipal {
 			public void run() {
 				try {
 					MenuPrincipal window = new MenuPrincipal();
-					window.frmMen.setVisible(true);
+					window._frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -39,6 +40,7 @@ public class MenuPrincipal {
 	 * Create the application.
 	 */
 	public MenuPrincipal() {
+		super();
 		initialize();
 	}
 
@@ -46,23 +48,33 @@ public class MenuPrincipal {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmMen = new JFrame();
-		frmMen.setTitle("Menú");
-		frmMen.setBounds(100, 100, 450, 300);
-		frmMen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		_frame = new JFrame();
+		_frame.setTitle("Menú");
+		_frame.setBounds(100, 100, 450, 300);
+		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();
-		frmMen.setJMenuBar(menuBar);
+		_frame.setJMenuBar(menuBar);
 		
 		JMenu menuArchivo = new JMenu("Archivo");
 		menuArchivo.setFont(new Font("Arial", Font.PLAIN, 14));
 		menuBar.add(menuArchivo);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Guardar");
-		menuArchivo.add(mntmNewMenuItem);
+		JMenuItem itemGuardar = new JMenuItem("Guardar");
+		itemGuardar.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        _controller.respaldarDatos();
+		    }
+		});
+		menuArchivo.add(itemGuardar);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Abrir");
-		menuArchivo.add(mntmNewMenuItem_1);
+		JMenuItem itemAbrir = new JMenuItem("Abrir");
+		itemAbrir.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        _controller.recuperarDatos();
+		    }
+		});
+		menuArchivo.add(itemAbrir);
 		
 		JMenu menuRegistro = new JMenu("Registrar");
 		menuRegistro.setFont(new Font("Arial", Font.PLAIN, 14));

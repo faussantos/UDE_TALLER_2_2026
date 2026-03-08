@@ -145,7 +145,7 @@ public class ListadoVentas {
 
 	}
 
-	public void cargarDatos(VO_VentaCompleto[] ventas) {
+	public void mostrarVentas(VO_VentaCompleto[] ventas) {
 		modelo.setRowCount(0);
 		for (VO_VentaCompleto v : ventas) {
 			String estado;

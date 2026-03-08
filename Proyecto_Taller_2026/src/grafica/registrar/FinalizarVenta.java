@@ -15,11 +15,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
+import grafica.Ventana;
 import grafica.controladores.FinalizarVentaController;
 
-public class FinalizarVenta {
+public class FinalizarVenta extends Ventana{
 
-	private JFrame frmFinalizarVenta;
 	private JTextField textFieldNumeroVenta;
 	private FinalizarVentaController _controller;
 
@@ -31,7 +31,7 @@ public class FinalizarVenta {
 			public void run() {
 				try {
 					FinalizarVenta window = new FinalizarVenta();
-					window.frmFinalizarVenta.setVisible(true);
+					window._frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -52,35 +52,35 @@ public class FinalizarVenta {
 	    initialize();
 	    textFieldNumeroVenta.setText(String.valueOf(numeroVenta));
 	    textFieldNumeroVenta.setEditable(false);
-	    frmFinalizarVenta.setVisible(true);
+	    _frame.setVisible(true);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmFinalizarVenta = new JFrame();
-		frmFinalizarVenta.setTitle("Finalizar venta");
-		frmFinalizarVenta.setBounds(100, 100, 450, 300);
-		frmFinalizarVenta.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frmFinalizarVenta.getContentPane().setLayout(null);
+		_frame = new JFrame();
+		_frame.setTitle("Finalizar venta");
+		_frame.setBounds(100, 100, 450, 300);
+		_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		_frame.getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Ingrese el numero que identifica a la venta");
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 15));
 		lblNewLabel.setBounds(10, 10, 378, 32);
-		frmFinalizarVenta.getContentPane().add(lblNewLabel);
+		_frame.getContentPane().add(lblNewLabel);
 		
 		JRadioButton rdbtnConfirmar = new JRadioButton("CONFIRMAR");
 		rdbtnConfirmar.setHorizontalAlignment(SwingConstants.CENTER);
 		rdbtnConfirmar.setFont(new Font("Arial", Font.BOLD, 11));
 		rdbtnConfirmar.setBounds(209, 160, 129, 23);
-		frmFinalizarVenta.getContentPane().add(rdbtnConfirmar);
+		_frame.getContentPane().add(rdbtnConfirmar);
 		
 		JRadioButton rdbtnCancelar = new JRadioButton("CANCELAR");
 		rdbtnCancelar.setHorizontalAlignment(SwingConstants.CENTER);
 		rdbtnCancelar.setFont(new Font("Arial", Font.BOLD, 11));
 		rdbtnCancelar.setBounds(78, 160, 129, 23);
-		frmFinalizarVenta.getContentPane().add(rdbtnCancelar);
+		_frame.getContentPane().add(rdbtnCancelar);
 		
 		ButtonGroup grupoBotones = new ButtonGroup();
 		grupoBotones.add(rdbtnConfirmar);
@@ -90,12 +90,12 @@ public class FinalizarVenta {
 		JLabel lblNewLabel_2_2 = new JLabel("Numero de venta:");
 		lblNewLabel_2_2.setFont(new Font("Arial", Font.PLAIN, 13));
 		lblNewLabel_2_2.setBounds(10, 86, 112, 16);
-		frmFinalizarVenta.getContentPane().add(lblNewLabel_2_2);
+		_frame.getContentPane().add(lblNewLabel_2_2);
 		
 		textFieldNumeroVenta = new JTextField();
 		textFieldNumeroVenta.setColumns(10);
 		textFieldNumeroVenta.setBounds(132, 85, 34, 19);
-		frmFinalizarVenta.getContentPane().add(textFieldNumeroVenta);
+		_frame.getContentPane().add(textFieldNumeroVenta);
 		
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
@@ -103,7 +103,7 @@ public class FinalizarVenta {
 			}
 		});
 		btnAceptar.setBounds(341, 232, 85, 21);
-		frmFinalizarVenta.getContentPane().add(btnAceptar);
+		_frame.getContentPane().add(btnAceptar);
 		btnAceptar.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		        String numeroVentaStr = textFieldNumeroVenta.getText().trim();
@@ -128,16 +128,9 @@ public class FinalizarVenta {
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(10, 232, 85, 21);
-		frmFinalizarVenta.getContentPane().add(btnCancelar);
-	}
-	
-	public void mostrarError(String mensaje) {
-	    JOptionPane.showMessageDialog(frmFinalizarVenta, mensaje,
-	        "Error", JOptionPane.ERROR_MESSAGE);
-	}
+		_frame.getContentPane().add(btnCancelar);
+		
+		_frame.setVisible(true);
 
-	public void mostrarExito(String mensaje) {
-	    JOptionPane.showMessageDialog(frmFinalizarVenta, mensaje,
-	        "Éxito", JOptionPane.INFORMATION_MESSAGE);
 	}
 }

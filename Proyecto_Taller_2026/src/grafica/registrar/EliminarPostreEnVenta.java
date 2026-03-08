@@ -6,11 +6,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import grafica.Ventana;
+
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 
-public class EliminarPostreEnVenta {
+public class EliminarPostreEnVenta extends Ventana {
 
 	private JFrame frmEliminarPostre;
 	private JTextField textField;

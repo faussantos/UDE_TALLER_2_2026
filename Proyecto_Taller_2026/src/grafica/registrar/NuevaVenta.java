@@ -7,15 +7,15 @@ import java.time.LocalDate;
 
 import javax.swing.*;
 
+import grafica.Ventana;
 import grafica.controladores.NuevaVentaController;
 
 import java.awt.*; 
 
 
 
-public class NuevaVenta {
+public class NuevaVenta extends Ventana {
 
-	private JFrame frmRegistroDeVenta;
 	private JTextField textFieldDireccion;
 	private NuevaVentaController _controller;
 	
@@ -27,7 +27,7 @@ public class NuevaVenta {
 			public void run() {
 				try {
 					NuevaVenta window = new NuevaVenta();
-					window.frmRegistroDeVenta.setVisible(true);
+					window._frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -47,27 +47,27 @@ public class NuevaVenta {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmRegistroDeVenta = new JFrame();
-		frmRegistroDeVenta.setTitle("Registro de venta");
-		frmRegistroDeVenta.setBounds(100, 100, 431, 241);
-		frmRegistroDeVenta.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmRegistroDeVenta.getContentPane().setLayout(null);
+		_frame = new JFrame();
+		_frame.setTitle("Registro de venta");
+		_frame.setBounds(100, 100, 431, 241);
+		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		_frame.getContentPane().setLayout(null);
 		
 		JLabel lblTitulo = new JLabel("Ingrese los datos de la nueva venta:");
 		lblTitulo.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblTitulo.setFont(new Font("Arial", Font.BOLD, 15));
 		lblTitulo.setBounds(10, 10, 270, 22);
-		frmRegistroDeVenta.getContentPane().add(lblTitulo);
+		_frame.getContentPane().add(lblTitulo);
 		
 		//DIRECCION
 		JLabel lblDireccion = new JLabel("Direccion :");
 		lblDireccion.setFont(new Font("Arial", Font.PLAIN, 13));
 		lblDireccion.setBounds(39, 53, 86, 16);
-		frmRegistroDeVenta.getContentPane().add(lblDireccion);
+		_frame.getContentPane().add(lblDireccion);
 		
 		textFieldDireccion = new JTextField();
 		textFieldDireccion.setBounds(114, 52, 250, 19);
-		frmRegistroDeVenta.getContentPane().add(textFieldDireccion);
+		_frame.getContentPane().add(textFieldDireccion);
 		textFieldDireccion.setColumns(10);
 		//DIRECCION
 		
@@ -75,7 +75,7 @@ public class NuevaVenta {
 		JLabel lblFecha = new JLabel("Fecha: ");
 		lblFecha.setFont(new Font("Arial", Font.PLAIN, 13));
 		lblFecha.setBounds(39, 94, 86, 16);
-		frmRegistroDeVenta.getContentPane().add(lblFecha);
+		_frame.getContentPane().add(lblFecha);
 		
 		Integer[] dias = new Integer[31];
 		for (int i = 0; i < 31; i++) {
@@ -86,7 +86,7 @@ public class NuevaVenta {
 			comboDia.addItem(dia);
 		}
 		comboDia.setBounds(114, 92, 43, 21);
-		frmRegistroDeVenta.getContentPane().add(comboDia);
+		_frame.getContentPane().add(comboDia);
 		
 		
 		String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
@@ -100,7 +100,7 @@ public class NuevaVenta {
 			numeroMes++;
 		}
 		comboMes.setBounds(167, 92, 89, 21);
-		frmRegistroDeVenta.getContentPane().add(comboMes);
+		_frame.getContentPane().add(comboMes);
 		
 		
 		Integer[] anios = new Integer[10];
@@ -112,7 +112,7 @@ public class NuevaVenta {
 			comboAnio.addItem(anio);
 		}
 		comboAnio.setBounds(266, 92, 56, 21);
-		frmRegistroDeVenta.getContentPane().add(comboAnio);
+		_frame.getContentPane().add(comboAnio);
 		//FECHA
 		
 		LocalDate hoy = LocalDate.now();
@@ -123,15 +123,15 @@ public class NuevaVenta {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		    	frmRegistroDeVenta.dispose();
+		    	_frame.dispose();
 		    }
 		});
 		btnCancelar.setBounds(10, 163, 85, 21);
-		frmRegistroDeVenta.getContentPane().add(btnCancelar);
+		_frame.getContentPane().add(btnCancelar);
 		
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.setBounds(313, 163, 85, 21);
-		frmRegistroDeVenta.getContentPane().add(btnAceptar);
+		_frame.getContentPane().add(btnAceptar);
 		
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -151,30 +151,7 @@ public class NuevaVenta {
 			}
 		});
 		
-		frmRegistroDeVenta.setVisible(true);
-
-	}
-	
-	public void mostrarError(String mensaje) {
-	    JOptionPane.showMessageDialog(frmRegistroDeVenta, mensaje, 
-	        "Error", JOptionPane.ERROR_MESSAGE);
+		_frame.setVisible(true);
 	}
 
-	public void mostrarExito(int numeroVenta) {
-		
-		String[] opciones = {"Sí", "No"};
-	    int respuesta = JOptionPane.showOptionDialog(
-	        frmRegistroDeVenta,
-	        "Venta número " + numeroVenta + " creada correctamente. ¿Desea agregar postres?",
-	        "Éxito",
-	        JOptionPane.YES_NO_OPTION,
-	        JOptionPane.INFORMATION_MESSAGE,
-	        null,
-	        opciones,
-	        opciones[0]
-	    );
-	    if (respuesta == 0) {
-	        new AgregarPostreEnVenta(numeroVenta);
-	    }
-	}
 }

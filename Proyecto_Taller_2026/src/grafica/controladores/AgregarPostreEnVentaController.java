@@ -24,15 +24,15 @@ public class AgregarPostreEnVentaController extends Controller {
             capaLogica.agregarPostreEnVenta(datosDetalle);
             ventana.mostrarExito("Postre agregado correctamente a la venta número " + numeroVenta);
         } catch (CantidadNegativaException e) {
-            ventana.mostrarError("La cantidad ingresada debe ser mayor a 0.");
+            ventana.mostrarError(e.getMessage());
         } catch (CantidadMayor40Exception e) {
-            ventana.mostrarError("La venta no puede superar las 40 unidades en total.");
+            ventana.mostrarError(e.getMessage());
         } catch (NoExistePostreException e) {
-            ventana.mostrarError("El código ingresado no corresponde a ningún postre.");
+            ventana.mostrarError(e.getMessage());
         } catch (NoExisteNumeroVentaException e) {
-            ventana.mostrarError("El número ingresado no corresponde a ninguna venta.");
+            ventana.mostrarError(e.getMessage());
         } catch (VentaNoEnProcesoException e) {
-            ventana.mostrarError("La venta ya está finalizada, no se pueden agregar más postres.");
+            ventana.mostrarError(e.getMessage());
         } catch (RemoteException e) {
             ventana.mostrarError("Error de conexión con el servidor.");
         } catch (Exception e) {
