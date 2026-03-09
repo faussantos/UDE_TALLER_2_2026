@@ -1,11 +1,5 @@
 package grafica.registrar;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
@@ -14,6 +8,7 @@ import grafica.controladores.NuevoPostreController;
 
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.*;
 
@@ -25,22 +20,6 @@ public class NuevoPostre extends Ventana {
 	private JTextField txtFieldEndulzante;
 	private JTextField txtFieldDescripcion;
 	private NuevoPostreController _controller;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					NuevoPostre window = new NuevoPostre();
-					window._frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.

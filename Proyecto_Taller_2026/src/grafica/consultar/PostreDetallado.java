@@ -1,7 +1,6 @@
 package grafica.consultar;
 
 import java.awt.EventQueue;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import java.awt.Font;
@@ -12,7 +11,6 @@ import javax.swing.JTextField;
 
 import grafica.Ventana;
 import grafica.controladores.PostreDetalladoController;
-import value_objects.VO_CodigoPostre;
 import value_objects.VO_Light;
 import value_objects.VO_Postre;
 
@@ -22,22 +20,6 @@ public class PostreDetallado extends Ventana {
 
 	private JTextField textField;
 	private PostreDetalladoController _controller;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PostreDetallado window = new PostreDetallado();
-					window._frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.

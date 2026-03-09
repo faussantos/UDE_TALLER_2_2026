@@ -1,16 +1,12 @@
 package grafica.registrar;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
@@ -22,22 +18,6 @@ public class FinalizarVenta extends Ventana{
 
 	private JTextField textFieldNumeroVenta;
 	private FinalizarVentaController _controller;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FinalizarVenta window = new FinalizarVenta();
-					window._frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.

@@ -1,8 +1,5 @@
 package grafica.registrar;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -22,22 +19,6 @@ public class EliminarPostreEnVenta extends Ventana {
 	private JTextField textField;
 	private JTextField textField_1;
 	private EliminarPostreEnVentaController _controller;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					EliminarPostreEnVenta window = new EliminarPostreEnVenta();
-					window._frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.

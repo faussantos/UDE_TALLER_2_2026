@@ -1,7 +1,5 @@
 package grafica;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -19,22 +17,6 @@ import java.awt.event.ActionListener;
 public class MenuPrincipal extends Ventana{
 
 	ArchivosController _controller = new ArchivosController(this);
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MenuPrincipal window = new MenuPrincipal();
-					window._frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
@@ -176,6 +158,9 @@ public class MenuPrincipal extends Ventana{
 						new ListadoDetallesEnVenta();
 					}
 				});
+		
+		_frame.setVisible(true);
+
 	}
 
 }

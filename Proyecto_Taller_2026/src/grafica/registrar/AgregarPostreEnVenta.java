@@ -1,11 +1,5 @@
 package grafica.registrar;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +11,7 @@ import grafica.controladores.AgregarPostreEnVentaController;
 
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JButton;
 
 public class AgregarPostreEnVenta extends Ventana {
@@ -24,22 +19,6 @@ public class AgregarPostreEnVenta extends Ventana {
 	private JTextField textFieldCodigoPostre;
 	private JTextField textFieldNumeroVenta;
 	AgregarPostreEnVentaController _controller;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AgregarPostreEnVenta window = new AgregarPostreEnVenta();
-					window._frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.

@@ -1,26 +1,16 @@
 package grafica.consultar;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
-
 import javax.swing.JTextField;
 
 import grafica.Ventana;
 import grafica.controladores.RecaudacionPostreFechaController;
 import grafica.registrar.AUX_Mes;
 import value_objects.VO_CantidadMonto;
-import value_objects.VO_CodigoPostre;
-import value_objects.VO_Light;
-import value_objects.VO_Postre;
-import value_objects.VO_PostreFecha;
 
 import javax.swing.JComboBox;
 import javax.swing.JButton;
@@ -29,22 +19,6 @@ public class RecaudacionPostreFecha extends Ventana{
 
 	private JTextField textField;
 	private RecaudacionPostreFechaController _controller;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RecaudacionPostreFecha window = new RecaudacionPostreFecha();
-					window._frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.

@@ -3,8 +3,6 @@ package grafica;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import grafica.registrar.AgregarPostreEnVenta;
-
 public class Ventana {
 	protected JFrame _frame;
 

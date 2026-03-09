@@ -1,6 +1,5 @@
 package grafica.listados;
 
-import java.awt.EventQueue;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -10,7 +9,6 @@ import value_objects.VO_VentaCompleto;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import java.awt.Font;
@@ -27,22 +25,6 @@ public class ListadoVentas extends Ventana{
 	private JTable table;
 	private DefaultTableModel modelo;
 	private ListadoVentasController _controller;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ListadoVentas window = new ListadoVentas();
-					window._frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.

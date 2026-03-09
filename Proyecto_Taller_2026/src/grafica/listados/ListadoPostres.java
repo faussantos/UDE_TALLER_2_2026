@@ -1,18 +1,13 @@
 package grafica.listados;
 
-import java.awt.EventQueue;
-
 import javax.swing.table.DefaultTableModel;
 
 import grafica.Ventana;
 import grafica.controladores.ListadoPostresController;
-import grafica.controladores.NuevoPostreController;
 import value_objects.VO_Postre;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -27,22 +22,6 @@ public class ListadoPostres extends Ventana {
 	private JTable table;
 	private ListadoPostresController _controller;
 	private DefaultTableModel modelo;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ListadoPostres window = new ListadoPostres();
-					window._frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
@@ -70,7 +49,12 @@ public class ListadoPostres extends Ventana {
 		_frame.getContentPane().add(scrollPane);
 
 		String[] columnas = { "Código", "Nombre", "Precio", "Tipo" };
-		modelo = new DefaultTableModel(columnas, 0);
+		modelo = new DefaultTableModel(columnas, 0) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		table = new JTable(modelo);
 		table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 12));
 		table.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -79,15 +63,15 @@ public class ListadoPostres extends Ventana {
 		JButton btnCerrar = new JButton("Cerrar");
 		btnCerrar.setBounds(331, 229, 95, 21);
 		_frame.getContentPane().add(btnCerrar);
-		
+
 		btnCerrar.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		    	_frame.dispose();
-		    }
+			public void actionPerformed(ActionEvent e) {
+				_frame.dispose();
+			}
 		});
 
 		_controller.ListadoPostres();
-		
+
 		_frame.setVisible(true);
 	}
 

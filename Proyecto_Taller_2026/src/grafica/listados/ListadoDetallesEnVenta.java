@@ -1,17 +1,13 @@
 package grafica.listados;
 
-import java.awt.EventQueue;
-
 import javax.swing.table.DefaultTableModel;
 
 import grafica.Ventana;
 import grafica.controladores.ListadoDetallesEnVentaController;
-import value_objects.VO_NumeroVenta;
 import value_objects.VO_PostreCantidad;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import java.awt.Font;
@@ -29,22 +25,6 @@ public class ListadoDetallesEnVenta extends Ventana {
 	private JTextField textFieldNumeroVenta;
 	private ListadoDetallesEnVentaController _controller;
 	private DefaultTableModel modelo;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ListadoDetallesEnVenta window = new ListadoDetallesEnVenta();
-					window._frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
@@ -72,7 +52,12 @@ public class ListadoDetallesEnVenta extends Ventana {
 		_frame.getContentPane().add(scrollPane);
 
 		String[] columnas = { "Código", "Nombre", "Precio", "Tipo", "Cantidad" };
-		modelo = new DefaultTableModel(columnas, 0);
+		modelo = new DefaultTableModel(columnas, 0) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		table = new JTable(modelo);
 		table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 12));
 		table.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -130,7 +115,7 @@ public class ListadoDetallesEnVenta extends Ventana {
 
 	public void mostrarDetalles(VO_PostreCantidad[] listadoDetalles) {
 		modelo.setRowCount(0);
-		
+
 		for (int i = 0; i < listadoDetalles.length; i++) {
 			String codigo = listadoDetalles[i].getCodigo();
 			String nombre = listadoDetalles[i].getNombre();
