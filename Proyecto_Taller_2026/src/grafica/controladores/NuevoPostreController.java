@@ -16,7 +16,7 @@ public class NuevoPostreController extends Controller {
 
 	}
 
-	public void NuevoPostre(String codigo, String nombre, double precioDouble, boolean light, String endulzante,
+	public void nuevoPostre(String codigo, String nombre, double precioDouble, boolean light, String endulzante,
 			String descripcion) {
 		try {
 			VO_Postre datosPostre;
@@ -27,7 +27,7 @@ public class NuevoPostreController extends Controller {
 				datosPostre = new VO_Postre(codigo, nombre, precioDouble);
 			}
 
-			capaLogica.AltaPostre(datosPostre);
+			capaLogica.altaPostre(datosPostre);
 			ventana.mostrarExito("Postre ingresado correctamente");
 
 		} catch (ExistePostreException e) {

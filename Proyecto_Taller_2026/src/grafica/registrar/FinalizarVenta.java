@@ -19,9 +19,6 @@ public class FinalizarVenta extends Ventana{
 	private JTextField textFieldNumeroVenta;
 	private FinalizarVentaController _controller;
 
-	/**
-	 * Create the application.
-	 */
 	public FinalizarVenta() {
 		super("Finalizar venta");
 	    _controller = new FinalizarVentaController(this);
@@ -37,16 +34,13 @@ public class FinalizarVenta extends Ventana{
 	    _frame.setVisible(true);
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		_frame.setBounds(100, 100, 450, 300);
 		
-		JLabel lblNewLabel = new JLabel("Ingrese el numero que identifica a la venta");
-		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 15));
-		lblNewLabel.setBounds(10, 10, 378, 32);
-		_frame.getContentPane().add(lblNewLabel);
+		JLabel lblMensajeIngreso = new JLabel("Ingrese el numero que identifica a la venta");
+		lblMensajeIngreso.setFont(new Font("Arial", Font.BOLD, 15));
+		lblMensajeIngreso.setBounds(10, 10, 378, 32);
+		_frame.getContentPane().add(lblMensajeIngreso);
 		
 		JRadioButton rdbtnConfirmar = new JRadioButton("CONFIRMAR");
 		rdbtnConfirmar.setHorizontalAlignment(SwingConstants.CENTER);
@@ -65,10 +59,10 @@ public class FinalizarVenta extends Ventana{
 		grupoBotones.add(rdbtnCancelar);
 		rdbtnConfirmar.setSelected(true);
 		
-		JLabel lblNewLabel_2_2 = new JLabel("Numero de venta:");
-		lblNewLabel_2_2.setFont(new Font("Arial", Font.PLAIN, 13));
-		lblNewLabel_2_2.setBounds(10, 86, 112, 16);
-		_frame.getContentPane().add(lblNewLabel_2_2);
+		JLabel lblNumeroVenta = new JLabel("Numero de venta:");
+		lblNumeroVenta.setFont(new Font("Arial", Font.PLAIN, 13));
+		lblNumeroVenta.setBounds(10, 86, 112, 16);
+		_frame.getContentPane().add(lblNumeroVenta);
 		
 		textFieldNumeroVenta = new JTextField();
 		textFieldNumeroVenta.setColumns(10);

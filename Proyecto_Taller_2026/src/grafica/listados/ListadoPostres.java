@@ -23,26 +23,20 @@ public class ListadoPostres extends Ventana {
 	private ListadoPostresController _controller;
 	private DefaultTableModel modelo;
 
-	/**
-	 * Create the application.
-	 */
 	public ListadoPostres() {
 		super("Listado de Postres");
 		_controller = new ListadoPostresController(this);
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		_frame.setBounds(100, 100, 450, 300);
 
-		JLabel lblNewLabel = new JLabel("Listado de postres");
-		lblNewLabel.setBounds(0, 0, 436, 19);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
-		_frame.getContentPane().add(lblNewLabel);
+		JLabel lblTitulo = new JLabel("Listado de postres");
+		lblTitulo.setBounds(0, 0, 436, 19);
+		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
+		_frame.getContentPane().add(lblTitulo);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 19, 416, 200);
@@ -70,7 +64,7 @@ public class ListadoPostres extends Ventana {
 			}
 		});
 
-		_controller.ListadoPostres();
+		_controller.listadoPostres();
 
 		_frame.setVisible(true);
 	}

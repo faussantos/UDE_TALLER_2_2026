@@ -18,17 +18,11 @@ public class MenuPrincipal extends Ventana{
 
 	ArchivosController _controller = new ArchivosController(this);
 
-	/**
-	 * Create the application.
-	 */
 	public MenuPrincipal() {
 		super("Menú");
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		_frame.setBounds(100, 100, 450, 300);
 		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

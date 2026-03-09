@@ -15,7 +15,7 @@ public class ListadoDetallesEnVentaController extends Controller {
 		ventana = ven;
 	}
 
-	public void ListadoDetallesEnVenta(int numeroVenta) {
+	public void listadoDetallesEnVenta(int numeroVenta) {
 		VO_NumeroVenta datosVenta = new VO_NumeroVenta(numeroVenta);
 		
 		try {

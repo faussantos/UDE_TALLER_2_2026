@@ -16,45 +16,39 @@ import javax.swing.JButton;
 
 public class EliminarPostreEnVenta extends Ventana {
 
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField textFieldCodigoPostre;
+	private JTextField textFieldNumeroVenta;
 	private EliminarPostreEnVentaController _controller;
 
-	/**
-	 * Create the application.
-	 */
 	public EliminarPostreEnVenta() {
 		super("Eliminar postre de la venta");
 		_controller = new EliminarPostreEnVentaController(this);
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		_frame.setBounds(100, 100, 490, 279);
 
-		JLabel lblNewLabel_1 = new JLabel("Ingrese los datos");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 15));
-		lblNewLabel_1.setBounds(10, 10, 134, 22);
-		_frame.getContentPane().add(lblNewLabel_1);
+		JLabel lblIngreseLosDatos = new JLabel("Ingrese los datos");
+		lblIngreseLosDatos.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblIngreseLosDatos.setFont(new Font("Arial", Font.BOLD, 15));
+		lblIngreseLosDatos.setBounds(10, 10, 134, 22);
+		_frame.getContentPane().add(lblIngreseLosDatos);
 
-		JLabel lblNewLabel_2 = new JLabel("Código de postre:");
-		lblNewLabel_2.setFont(new Font("Arial", Font.PLAIN, 13));
-		lblNewLabel_2.setBounds(20, 61, 124, 16);
-		_frame.getContentPane().add(lblNewLabel_2);
+		JLabel lblCodigoPostre = new JLabel("Código de postre:");
+		lblCodigoPostre.setFont(new Font("Arial", Font.PLAIN, 13));
+		lblCodigoPostre.setBounds(20, 61, 124, 16);
+		_frame.getContentPane().add(lblCodigoPostre);
 
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(164, 60, 240, 19);
-		_frame.getContentPane().add(textField);
+		textFieldCodigoPostre = new JTextField();
+		textFieldCodigoPostre.setColumns(10);
+		textFieldCodigoPostre.setBounds(164, 60, 240, 19);
+		_frame.getContentPane().add(textFieldCodigoPostre);
 
-		JLabel lblNewLabel_2_1 = new JLabel("Cantidad de unidades:");
-		lblNewLabel_2_1.setFont(new Font("Arial", Font.PLAIN, 13));
-		lblNewLabel_2_1.setBounds(20, 87, 134, 16);
-		_frame.getContentPane().add(lblNewLabel_2_1);
+		JLabel lblCantidad = new JLabel("Cantidad de unidades:");
+		lblCantidad.setFont(new Font("Arial", Font.PLAIN, 13));
+		lblCantidad.setBounds(20, 87, 134, 16);
+		_frame.getContentPane().add(lblCantidad);
 
 		JComboBox<Integer> comboBox = new JComboBox<>();
 		for (int i = 1; i <= 40; i++) {
@@ -63,15 +57,15 @@ public class EliminarPostreEnVenta extends Ventana {
 		comboBox.setBounds(164, 85, 50, 21);
 		_frame.getContentPane().add(comboBox);
 
-		JLabel lblNewLabel_2_2 = new JLabel("Numero de venta:");
-		lblNewLabel_2_2.setFont(new Font("Arial", Font.PLAIN, 13));
-		lblNewLabel_2_2.setBounds(20, 113, 112, 16);
-		_frame.getContentPane().add(lblNewLabel_2_2);
+		JLabel lblNumeroVenta = new JLabel("Numero de venta:");
+		lblNumeroVenta.setFont(new Font("Arial", Font.PLAIN, 13));
+		lblNumeroVenta.setBounds(20, 113, 112, 16);
+		_frame.getContentPane().add(lblNumeroVenta);
 
-		textField_1 = new JTextField();
-		textField_1.setBounds(164, 112, 96, 19);
-		_frame.getContentPane().add(textField_1);
-		textField_1.setColumns(10);
+		textFieldNumeroVenta = new JTextField();
+		textFieldNumeroVenta.setBounds(164, 112, 96, 19);
+		_frame.getContentPane().add(textFieldNumeroVenta);
+		textFieldNumeroVenta.setColumns(10);
 
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.setBounds(381, 211, 85, 21);
@@ -79,9 +73,9 @@ public class EliminarPostreEnVenta extends Ventana {
 		
 		btnAceptar.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		        String codigoPostre = textField.getText().trim();
+		        String codigoPostre = textFieldCodigoPostre.getText().trim();
 		        int cantidad = (Integer) comboBox.getSelectedItem();
-		        String numeroVenta = textField_1.getText();
+		        String numeroVenta = textFieldNumeroVenta.getText();
 		        
 		        if (codigoPostre.isEmpty()) {
 		            mostrarError("El codigo de postre es obligatorio.");
@@ -101,7 +95,7 @@ public class EliminarPostreEnVenta extends Ventana {
 		            return;
 		        }
 		      
-		        _controller.EliminarPostreEnVenta(cantidad, codigoPostre, numeroVentaInt);
+		        _controller.eliminarPostreEnVenta(cantidad, codigoPostre, numeroVentaInt);
 		    }
 		});
 

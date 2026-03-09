@@ -17,21 +17,15 @@ import javax.swing.JButton;
 
 public class RecaudacionPostreFecha extends Ventana{
 
-	private JTextField textField;
+	private JTextField textFieldCodigoPostre;
 	private RecaudacionPostreFechaController _controller;
 
-	/**
-	 * Create the application.
-	 */
 	public RecaudacionPostreFecha() {
 		super("Monto recaudado por postre en fecha");
 		_controller = new RecaudacionPostreFechaController(this);
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		_frame.setBounds(100, 100, 450, 300);
 
@@ -40,20 +34,20 @@ public class RecaudacionPostreFecha extends Ventana{
 		lblIngreseLosDatos.setBounds(10, 10, 378, 32);
 		_frame.getContentPane().add(lblIngreseLosDatos);
 
-		JLabel lblNewLabel_2_2 = new JLabel("Código:");
-		lblNewLabel_2_2.setFont(new Font("Arial", Font.PLAIN, 13));
-		lblNewLabel_2_2.setBounds(10, 53, 112, 16);
-		_frame.getContentPane().add(lblNewLabel_2_2);
+		JLabel lblCodigoPostre = new JLabel("Código:");
+		lblCodigoPostre.setFont(new Font("Arial", Font.PLAIN, 13));
+		lblCodigoPostre.setBounds(10, 53, 112, 16);
+		_frame.getContentPane().add(lblCodigoPostre);
 
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(85, 52, 178, 19);
-		_frame.getContentPane().add(textField);
+		textFieldCodigoPostre = new JTextField();
+		textFieldCodigoPostre.setColumns(10);
+		textFieldCodigoPostre.setBounds(85, 52, 178, 19);
+		_frame.getContentPane().add(textFieldCodigoPostre);
 
-		JLabel lblNewLabel_2_1 = new JLabel("Fecha: ");
-		lblNewLabel_2_1.setFont(new Font("Arial", Font.PLAIN, 13));
-		lblNewLabel_2_1.setBounds(10, 95, 86, 16);
-		_frame.getContentPane().add(lblNewLabel_2_1);
+		JLabel lblFecha = new JLabel("Fecha: ");
+		lblFecha.setFont(new Font("Arial", Font.PLAIN, 13));
+		lblFecha.setBounds(10, 95, 86, 16);
+		_frame.getContentPane().add(lblFecha);
 
 		Integer[] dias = new Integer[31];
 		for (int i = 0; i < 31; i++) {
@@ -136,7 +130,7 @@ public class RecaudacionPostreFecha extends Ventana{
 
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String codigo = textField.getText();
+				String codigo = textFieldCodigoPostre.getText();
 
 				int dia = (Integer) comboDia.getSelectedItem();
 				AUX_Mes mesTexto = (AUX_Mes) comboMes.getSelectedItem();
@@ -149,7 +143,7 @@ public class RecaudacionPostreFecha extends Ventana{
 					return;
 				}
 
-				VO_CantidadMonto datosCantidadMonto = _controller.RecaudacionPostreFecha(codigo, fecha);
+				VO_CantidadMonto datosCantidadMonto = _controller.recaudacionPostreFecha(codigo, fecha);
 
 				if (datosCantidadMonto != null) {
 					lblUnidades.setVisible(true);

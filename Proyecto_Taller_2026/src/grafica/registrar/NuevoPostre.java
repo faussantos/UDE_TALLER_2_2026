@@ -21,27 +21,21 @@ public class NuevoPostre extends Ventana {
 	private JTextField txtFieldDescripcion;
 	private NuevoPostreController _controller;
 
-	/**
-	 * Create the application.
-	 */
 	public NuevoPostre() {
 		super("Registro de postre");
 		_controller = new NuevoPostreController(this);
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		_frame.setBounds(100, 100, 479, 384);
 		
 		// TITULO
-		JLabel lblNewLabel_1 = new JLabel("Ingrese los datos del nuevo postre");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 15));
-		lblNewLabel_1.setBounds(10, 32, 270, 22);
-		_frame.getContentPane().add(lblNewLabel_1);
+		JLabel lblTitulo = new JLabel("Ingrese los datos del nuevo postre");
+		lblTitulo.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblTitulo.setFont(new Font("Arial", Font.BOLD, 15));
+		lblTitulo.setBounds(10, 32, 270, 22);
+		_frame.getContentPane().add(lblTitulo);
 
 		// CODIGO POSTRE
 		JLabel lblCodigoPostre = new JLabel("Código:");
@@ -147,7 +141,7 @@ public class NuevoPostre extends Ventana {
 					}
 				}
 
-				_controller.NuevoPostre(codigo, nombre, precioDouble, light, endulzante, descripcion);
+				_controller.nuevoPostre(codigo, nombre, precioDouble, light, endulzante, descripcion);
 			}
 		});
 		btnAceptar.setBounds(367, 316, 85, 21);

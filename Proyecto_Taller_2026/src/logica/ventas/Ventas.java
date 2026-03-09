@@ -5,24 +5,24 @@ import java.util.LinkedList;
 
 import value_objects.*;
 
-public class Ventas implements Serializable{
+public class Ventas implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private LinkedList<Venta> ventas;
 
 	public Ventas() {
 		ventas = new LinkedList<Venta>();
 	}
 
-	public boolean EsVacia() {
+	public boolean esVacia() {
 		return ventas.isEmpty();
 	}
 
-	public int Largo() {
+	public int largo() {
 		return ventas.size();
 	}
 
-	public boolean Member(int numero) {
+	public boolean member(int numero) {
 		boolean existe = false;
 		for (Venta venta : ventas) {
 			if (venta.getNumero() == numero) {
@@ -33,7 +33,7 @@ public class Ventas implements Serializable{
 		return existe;
 	}
 
-	public Venta Find(int numero) {
+	public Venta find(int numero) {
 		Venta ventaDevolver = null;
 		for (Venta venta : ventas) {
 			if (venta.getNumero() == numero) {
@@ -43,11 +43,11 @@ public class Ventas implements Serializable{
 		return ventaDevolver;
 	}
 
-	public void InsBack(Venta venta) {
+	public void insBack(Venta venta) {
 		ventas.add(venta);
 	}
 
-	public void Modify(Venta ventaNueva) {
+	public void modify(Venta ventaNueva) {
 		for (Venta ventaCambiar : ventas) {
 			if (ventaCambiar.getNumero() == ventaNueva.getNumero()) {
 				int index = ventas.indexOf(ventaCambiar);
@@ -56,7 +56,7 @@ public class Ventas implements Serializable{
 		}
 	}
 
-	public VO_VentaCompleto[] ListarVentas() {
+	public VO_VentaCompleto[] listarVentas() {
 		VO_VentaCompleto[] arre = new VO_VentaCompleto[ventas.size()];
 		int i = 0;
 		for (Venta venta : ventas) {
@@ -75,7 +75,7 @@ public class Ventas implements Serializable{
 		return ventaDevolver;
 	}
 
-	public VO_VentaCompleto[] ListarVentasEnProceso() {
+	public VO_VentaCompleto[] listarVentasEnProceso() {
 		VO_VentaCompleto[] arre = new VO_VentaCompleto[ventas.size()];
 		int i = 0;
 		for (Venta venta : ventas) {
@@ -88,7 +88,7 @@ public class Ventas implements Serializable{
 		return arre;
 	}
 
-	public VO_VentaCompleto[] ListarVentasEnFinalizadas() {
+	public VO_VentaCompleto[] listarVentasEnFinalizadas() {
 		VO_VentaCompleto[] arre = new VO_VentaCompleto[ventas.size()];
 		int i = 0;
 		for (Venta venta : ventas) {
@@ -102,7 +102,7 @@ public class Ventas implements Serializable{
 	}
 
 	public void borrar(int numeroVenta) {
-		Venta ventaBorrar = this.Find(numeroVenta);
+		Venta ventaBorrar = this.find(numeroVenta);
 		ventas.remove(ventas.indexOf(ventaBorrar));
 	}
 
@@ -116,7 +116,7 @@ public class Ventas implements Serializable{
 					break;
 				}
 
-				if (venta.ExisteDetalle(datos.getCodigo())) {
+				if (venta.existeDetalle(datos.getCodigo())) {
 					DetalleVenta detalleBuscado = venta.getDetalle(datos.getCodigo());
 					cantidad += detalleBuscado.getCantidad();
 					monto += detalleBuscado.getPostre().getPrecio() * detalleBuscado.getCantidad();

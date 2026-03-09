@@ -7,10 +7,10 @@ import excepciones.*;
 
 public interface ICapaLogica extends Remote {
 
-	public void AltaPostre(VO_Postre datosPostre)
+	public void altaPostre(VO_Postre datosPostre)
 			throws RemoteException, ExistePostreException, InterruptedException;
 
-	public VO_Postre[] ListadoPostres()
+	public VO_Postre[] listadoPostres()
 			throws RemoteException, InterruptedException;
 
 	public VO_Postre detallePostre(VO_CodigoPostre codigoPostre)

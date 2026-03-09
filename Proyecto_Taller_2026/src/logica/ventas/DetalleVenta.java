@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 import logica.postres.*;
 
-public class DetalleVenta implements Serializable{
+public class DetalleVenta implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private int cantidad;
 	private Postre postre;
 
@@ -27,7 +27,7 @@ public class DetalleVenta implements Serializable{
 		this.cantidad = cantidad;
 	}
 
-	public double precioUnitPostre () {
+	public double precioUnitPostre() {
 		return postre.getPrecio();
 	}
 }

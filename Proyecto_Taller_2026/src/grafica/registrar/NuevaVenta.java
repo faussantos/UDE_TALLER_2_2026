@@ -16,18 +16,12 @@ public class NuevaVenta extends Ventana {
 	private JTextField textFieldDireccion;
 	private NuevaVentaController _controller;
 	
-	/**
-	 * Create the application.
-	 */
 	public NuevaVenta() {
 		super("Registro de venta");
 		_controller = new NuevaVentaController(this);
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		_frame.setBounds(100, 100, 431, 241);
 		
@@ -125,7 +119,7 @@ public class NuevaVenta extends Ventana {
 				    mostrarError("La dirección es obligatoria.");
 				    return;
 				}
-				_controller.NuevaVenta(fecha, direccion);
+				_controller.nuevaVenta(fecha, direccion);
 			}
 		});
 		

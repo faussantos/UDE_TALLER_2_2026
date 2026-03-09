@@ -5,32 +5,32 @@ import value_objects.*;
 import java.io.Serializable;
 import java.util.*;
 
-public class Postres implements Serializable{
+public class Postres implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private SortedMap<String, Postre> postres;
 
 	public Postres() {
 		postres = new TreeMap<String, Postre>();
 	}
 
-	public boolean Member(String codigo) {
+	public boolean member(String codigo) {
 		return postres.containsKey(codigo);
 	}
 
-	public void Insert(Postre postre) {
+	public void insert(Postre postre) {
 		postres.put(postre.getCodigo(), postre);
 	}
 
-	public Postre Find(String codigo) {
+	public Postre find(String codigo) {
 		return postres.get(codigo);
 	}
 
-	public boolean Empty() {
+	public boolean empty() {
 		return postres.isEmpty();
 	}
 
-	public VO_Postre[] ListarPostres() {
+	public VO_Postre[] listarPostres() {
 		VO_Postre[] arre = new VO_Postre[postres.size()];
 		int i = 0;
 		for (Postre postre : postres.values()) {

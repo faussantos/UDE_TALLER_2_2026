@@ -1,6 +1,7 @@
 package logica.postres;
 
 public class Light extends Postre {
+
 	private String endulzante;
 	private String descripcion;
 

@@ -36,11 +36,11 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica {
 		return instancia;
 	}
 
-	public void AltaPostre(VO_Postre datosPostre) throws ExistePostreException, InterruptedException, RemoteException {
+	public void altaPostre(VO_Postre datosPostre) throws ExistePostreException, InterruptedException, RemoteException {
 
 		monitor.comienzoEscritura();
 
-		if (dicPostres.Member(datosPostre.getCodigo())) {
+		if (dicPostres.member(datosPostre.getCodigo())) {
 			monitor.terminoEscritura();
 			String msg = "El código ingresado ya está registrado para un postre";
 			throw new ExistePostreException(msg);
@@ -55,14 +55,14 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica {
 			postre = new Postre(datosPostre.getCodigo(), datosPostre.getNombre(), datosPostre.getPrecio());
 		}
 
-		dicPostres.Insert(postre);
+		dicPostres.insert(postre);
 		monitor.terminoEscritura();
 	}
 
-	public VO_Postre[] ListadoPostres() throws InterruptedException {
+	public VO_Postre[] listadoPostres() throws InterruptedException {
 
 		monitor.comienzoLectura();
-		VO_Postre[] resultado = dicPostres.ListarPostres();
+		VO_Postre[] resultado = dicPostres.listarPostres();
 		monitor.terminoLectura();
 		return resultado;
 	}
@@ -71,12 +71,12 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica {
 
 		monitor.comienzoLectura();
 
-		if (!dicPostres.Member(codigoPostre.getCodigoPostre())) {
+		if (!dicPostres.member(codigoPostre.getCodigoPostre())) {
 			monitor.terminoLectura();
 			throw new NoExistePostreException("El código ingresado no está registrado para ningún postre");
 		}
 
-		Postre postreBuscado = dicPostres.Find(codigoPostre.getCodigoPostre());
+		Postre postreBuscado = dicPostres.find(codigoPostre.getCodigoPostre());
 
 		VO_Postre datosDevolver;
 
@@ -108,7 +108,7 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica {
 		Venta nuevaVenta = new Venta(datosVenta.getFecha(), datosVenta.getDireccion(), true, 0);
 
 		int numeroVenta;
-		if (secVentas.EsVacia()) {
+		if (secVentas.esVacia()) {
 			numeroVenta = 1;
 			nuevaVenta.setNumero(numeroVenta);
 		} else {
@@ -116,7 +116,7 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica {
 			nuevaVenta.setNumero(numeroVenta);
 		}
 
-		secVentas.InsBack(nuevaVenta);
+		secVentas.insBack(nuevaVenta);
 		monitor.terminoEscritura();
 		return numeroVenta;
 	}
@@ -135,16 +135,16 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica {
 			monitor.terminoEscritura();
 			throw new CantidadMayor40Exception("La cantidad de postres ingresados no puede superar las 40 unidades");
 		}
-		if (!dicPostres.Member(datosDetalle.getCodigoPostre())) {
+		if (!dicPostres.member(datosDetalle.getCodigoPostre())) {
 			monitor.terminoEscritura();
 			throw new NoExistePostreException("El código ingresado no está registrado para ningún postre");
 		}
-		if (!secVentas.Member(datosDetalle.getNumeroVenta())) {
+		if (!secVentas.member(datosDetalle.getNumeroVenta())) {
 			monitor.terminoEscritura();
 			throw new NoExisteNumeroVentaException("El número ingresado no está registrado para ninguna venta");
 		}
 
-		Venta ventaBuscada = secVentas.Find(datosDetalle.getNumeroVenta());
+		Venta ventaBuscada = secVentas.find(datosDetalle.getNumeroVenta());
 
 		if (!ventaBuscada.getEnProceso()) {
 			monitor.terminoEscritura();
@@ -157,15 +157,15 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica {
 					"La suma total de cantidades de una venta no puede superar las 40 unidades");
 		}
 
-		if (ventaBuscada.ExisteDetalle(datosDetalle.getCodigoPostre())) {
+		if (ventaBuscada.existeDetalle(datosDetalle.getCodigoPostre())) {
 			DetalleVenta detalleBuscado = ventaBuscada.getDetalle(datosDetalle.getCodigoPostre());
 			detalleBuscado.setCantidad(detalleBuscado.getCantidad() + datosDetalle.getCantidad());
 			ventaBuscada.setMonto(ventaBuscada.totalMontoDetalles());
 
 		} else {
-			Postre ingresarPostre = dicPostres.Find(datosDetalle.getCodigoPostre());
+			Postre ingresarPostre = dicPostres.find(datosDetalle.getCodigoPostre());
 			DetalleVenta nuevoDetalle = new DetalleVenta(datosDetalle.getCantidad(), ingresarPostre);
-			ventaBuscada.InsertarDetalle(nuevoDetalle);
+			ventaBuscada.insertarDetalle(nuevoDetalle);
 			ventaBuscada.setMonto(ventaBuscada.totalMontoDetalles());
 
 		}
@@ -183,19 +183,19 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica {
 			throw new CantidadNegativaException("La cantidad ingresada debe ser mayor a 0");
 		}
 
-		if (!secVentas.Member(datosDetalle.getNumeroVenta())) {
+		if (!secVentas.member(datosDetalle.getNumeroVenta())) {
 			monitor.terminoEscritura();
 			throw new NoExisteNumeroVentaException("El codigo ingresado no corresponde a ninguna venta");
 		}
 
-		Venta venta = secVentas.Find(datosDetalle.getNumeroVenta());
+		Venta venta = secVentas.find(datosDetalle.getNumeroVenta());
 
 		if (!venta.getEnProceso()) {
 			monitor.terminoEscritura();
 			throw new VentaNoEnProcesoException("La venta ya esta finalizada, no se pueden eliminar postres");
 		}
 
-		if (!venta.ExisteDetalle(datosDetalle.getCodigoPostre())) {
+		if (!venta.existeDetalle(datosDetalle.getCodigoPostre())) {
 			monitor.terminoEscritura();
 			throw new NoExistePostreException("El postre no existe en esta venta");
 		}
@@ -205,7 +205,7 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica {
 		int cantidadEliminar = datosDetalle.getCantidad();
 
 		if (cantidadEliminar >= cantidadActual) {
-			venta.BorrarDetalle(detalle.getPostre().getCodigo());
+			venta.borrarDetalle(detalle.getPostre().getCodigo());
 			venta.setMonto(venta.totalMontoDetalles());
 		} else {
 			detalle.setCantidad(cantidadActual - cantidadEliminar);
@@ -222,13 +222,13 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica {
 		monitor.comienzoEscritura();
 
 		double monto = 0.0;
-		if (!secVentas.Member(datosFinalizarVenta.getNumero())) {
+		if (!secVentas.member(datosFinalizarVenta.getNumero())) {
 			monitor.terminoEscritura();
 			throw new NoExisteNumeroVentaException("No existe venta registrada con el número ingresado");
 		}
 
-		Venta ventaBuscada = secVentas.Find(datosFinalizarVenta.getNumero());
-		if (ventaBuscada.DetallesEmpty() || !datosFinalizarVenta.getConfirma()) {
+		Venta ventaBuscada = secVentas.find(datosFinalizarVenta.getNumero());
+		if (ventaBuscada.detallesEmpty() || !datosFinalizarVenta.getConfirma()) {
 			secVentas.borrar(datosFinalizarVenta.getNumero());
 		} else if (datosFinalizarVenta.getConfirma()) {
 			ventaBuscada.setEnProceso(false);
@@ -253,11 +253,11 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica {
 		VO_VentaCompleto[] resultado;
 
 		if (datosIndicacion.getIndicacion() == 'T')
-			resultado = secVentas.ListarVentas();
+			resultado = secVentas.listarVentas();
 		else if (datosIndicacion.getIndicacion() == 'P')
-			resultado = secVentas.ListarVentasEnProceso();
+			resultado = secVentas.listarVentasEnProceso();
 		else
-			resultado = secVentas.ListarVentasEnFinalizadas();
+			resultado = secVentas.listarVentasEnFinalizadas();
 
 		monitor.terminoLectura();
 		return resultado;
@@ -268,13 +268,13 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica {
 
 		monitor.comienzoLectura();
 
-		if (!secVentas.Member(datosNumeroVenta.getNumero())) {
+		if (!secVentas.member(datosNumeroVenta.getNumero())) {
 			monitor.terminoLectura();
 			throw new NoExisteNumeroVentaException("No existe venta registrada con el número ingresado");
 		}
 
-		Venta ventaBuscada = secVentas.Find(datosNumeroVenta.getNumero());
-		VO_PostreCantidad[] resultado = ventaBuscada.ListarPostres();
+		Venta ventaBuscada = secVentas.find(datosNumeroVenta.getNumero());
+		VO_PostreCantidad[] resultado = ventaBuscada.listarPostres();
 
 		monitor.terminoLectura();
 		return resultado;
@@ -285,7 +285,7 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica {
 
 		monitor.comienzoLectura();
 
-		if (!dicPostres.Member(datos.getCodigo())) {
+		if (!dicPostres.member(datos.getCodigo())) {
 			monitor.terminoLectura();
 			throw new NoExistePostreException("El código ingresado no está registrado para ningún postre");
 		}

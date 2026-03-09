@@ -20,9 +20,6 @@ public class AgregarPostreEnVenta extends Ventana {
 	private JTextField textFieldNumeroVenta;
 	AgregarPostreEnVentaController _controller;
 
-	/**
-	 * Create the application.
-	 */
 	public AgregarPostreEnVenta() {
 		super("Agregar postre a venta");
 		_controller = new AgregarPostreEnVentaController(this);
@@ -38,32 +35,29 @@ public class AgregarPostreEnVenta extends Ventana {
 	    _frame.setVisible(true);
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		_frame.setBounds(100, 100, 440, 279);
 		
-		JLabel lblNewLabel_1 = new JLabel("Ingrese los datos");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 15));
-		lblNewLabel_1.setBounds(10, 10, 134, 22);
-		_frame.getContentPane().add(lblNewLabel_1);
+		JLabel lblIngreseLosDatos = new JLabel("Ingrese los datos");
+		lblIngreseLosDatos.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblIngreseLosDatos.setFont(new Font("Arial", Font.BOLD, 15));
+		lblIngreseLosDatos.setBounds(10, 10, 134, 22);
+		_frame.getContentPane().add(lblIngreseLosDatos);
 		
-		JLabel lblNewLabel_2 = new JLabel("Código de postre:");
-		lblNewLabel_2.setFont(new Font("Arial", Font.PLAIN, 13));
-		lblNewLabel_2.setBounds(20, 95, 124, 16);
-		_frame.getContentPane().add(lblNewLabel_2);
+		JLabel lblCodigoPostre = new JLabel("Código de postre:");
+		lblCodigoPostre.setFont(new Font("Arial", Font.PLAIN, 13));
+		lblCodigoPostre.setBounds(20, 95, 124, 16);
+		_frame.getContentPane().add(lblCodigoPostre);
 		
 		textFieldCodigoPostre = new JTextField();
 		textFieldCodigoPostre.setColumns(10);
 		textFieldCodigoPostre.setBounds(141, 94, 189, 19);
 		_frame.getContentPane().add(textFieldCodigoPostre);
 		
-		JLabel lblNewLabel_2_1 = new JLabel("Cantidad de unidades:");
-		lblNewLabel_2_1.setFont(new Font("Arial", Font.PLAIN, 13));
-		lblNewLabel_2_1.setBounds(20, 68, 134, 16);
-		_frame.getContentPane().add(lblNewLabel_2_1);
+		JLabel lblCantidad = new JLabel("Cantidad de unidades:");
+		lblCantidad.setFont(new Font("Arial", Font.PLAIN, 13));
+		lblCantidad.setBounds(20, 68, 134, 16);
+		_frame.getContentPane().add(lblCantidad);
 		
 		JComboBox<Integer> comboBox = new JComboBox<>();
 		for(int i = 1 ; i<=40; i++ ) {
@@ -72,10 +66,10 @@ public class AgregarPostreEnVenta extends Ventana {
 		comboBox.setBounds(164, 66, 50, 21);
 		_frame.getContentPane().add(comboBox);
 		
-		JLabel lblNewLabel_2_2 = new JLabel("Numero de venta:");
-		lblNewLabel_2_2.setFont(new Font("Arial", Font.PLAIN, 13));
-		lblNewLabel_2_2.setBounds(20, 40, 112, 16);
-		_frame.getContentPane().add(lblNewLabel_2_2);
+		JLabel lblNumeroVenta = new JLabel("Numero de venta:");
+		lblNumeroVenta.setFont(new Font("Arial", Font.PLAIN, 13));
+		lblNumeroVenta.setBounds(20, 40, 112, 16);
+		_frame.getContentPane().add(lblNumeroVenta);
 		
 		textFieldNumeroVenta = new JTextField();
 		textFieldNumeroVenta.setBounds(133, 39, 22, 19);

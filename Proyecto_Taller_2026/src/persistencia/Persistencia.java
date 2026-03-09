@@ -54,12 +54,3 @@ public class Persistencia {
 		return rutaRespaldoDatos;
 	}
 }
-
-/*
- * try { Properties p = new Properties(); String nomArch =
- * "config/ejemplo.properties"; // Abro el archivo properties y leo los datos de
- * configuración p.load (new FileInputStream (nomArch)); String ip =
- * p.getProperty("ipServidor"); String puerto = p.getProperty("puertoServidor");
- * ... } catch (IOException e) { e.printStackTrace(); }
- * 
- */

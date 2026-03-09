@@ -7,9 +7,9 @@ import java.util.*;
 import logica.postres.Postre;
 import value_objects.*;
 
-public class Venta implements Serializable{
+public class Venta implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private int numero;
 	private LocalDate fecha;
 	private String direccion;
@@ -25,7 +25,7 @@ public class Venta implements Serializable{
 		monto = mont;
 		detalles = new ArrayList<>();
 	}
-	
+
 	public int getNumero() {
 		return numero;
 	}
@@ -49,25 +49,25 @@ public class Venta implements Serializable{
 	public ArrayList<DetalleVenta> getDetalles() {
 		return detalles;
 	}
-	
+
 	public DetalleVenta getDetalle(String codigo) {
 		DetalleVenta detalleDevolver = null;
-		
-		for(DetalleVenta det: detalles) {
-			if(det.getPostre().getCodigo().equals(codigo)) {
+
+		for (DetalleVenta det : detalles) {
+			if (det.getPostre().getCodigo().equals(codigo)) {
 				detalleDevolver = det;
 				break;
 			}
 		}
-		
+
 		return detalleDevolver;
 	}
-	
-	public void setMonto (double mont) {
+
+	public void setMonto(double mont) {
 		monto = mont;
 	}
 
-	public boolean ExisteDetalle(String codigo) {
+	public boolean existeDetalle(String codigo) {
 		boolean existe = false;
 
 		for (DetalleVenta det : detalles) {
@@ -78,50 +78,50 @@ public class Venta implements Serializable{
 		}
 		return existe;
 	}
-	
+
 	public int getTotalUnidades() {
 		int total = 0;
-		for(DetalleVenta det: detalles) {
+		for (DetalleVenta det : detalles) {
 			total = total + det.getCantidad();
 		}
 		return total;
 	}
-	
+
 	public void setNumero(int num) {
 		numero = num;
 	}
-	
-	public void setEnProceso (boolean enProc) {
+
+	public void setEnProceso(boolean enProc) {
 		enProceso = enProc;
 	}
-	
-	public void ModificarDetalleLista(DetalleVenta det) {
+
+	public void modificarDetalleLista(DetalleVenta det) {
 		int index = detalles.indexOf(det);
-		if(index != -1)
+		if (index != -1)
 			detalles.set(index, det);
 	}
-	
-	public void InsertarDetalle(DetalleVenta det) {
+
+	public void insertarDetalle(DetalleVenta det) {
 		detalles.add(det);
 	}
-	
-	public void BorrarDetalle(String cod) {
-		for(DetalleVenta det: detalles) {
-			if(det.getPostre().getCodigo().equals(cod)) {
+
+	public void borrarDetalle(String cod) {
+		for (DetalleVenta det : detalles) {
+			if (det.getPostre().getCodigo().equals(cod)) {
 				detalles.remove(det);
 				break;
 			}
 		}
 	}
-	
-	public boolean DetallesEmpty () {
+
+	public boolean detallesEmpty() {
 		return (detalles.isEmpty());
 	}
-	
-	public VO_PostreCantidad[] ListarPostres() {
+
+	public VO_PostreCantidad[] listarPostres() {
 		VO_PostreCantidad[] arre = new VO_PostreCantidad[detalles.size()];
 		int i = 0;
-		for(DetalleVenta detalle : detalles) {
+		for (DetalleVenta detalle : detalles) {
 			Postre p = detalle.getPostre();
 			arre[i] = new VO_PostreCantidad(p.getCodigo(), p.getNombre(), p.getPrecio(), detalle.getCantidad());
 			i++;
@@ -132,23 +132,12 @@ public class Venta implements Serializable{
 	public VO_CantidadMonto totalMontoPostreYFecha() {
 		return null;
 	}
-	
+
 	public double totalMontoDetalles() {
 		double monto = 0;
-		for(DetalleVenta detalle : detalles) {
+		for (DetalleVenta detalle : detalles) {
 			monto = monto + detalle.precioUnitPostre() * detalle.getCantidad();
 		}
 		return monto;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-

@@ -19,7 +19,7 @@ public class EliminarPostreEnVentaController extends Controller {
 		this.ventana = ven;
 	}
 
-	public void EliminarPostreEnVenta(int cantidad, String codigo, int numeroVenta) {
+	public void eliminarPostreEnVenta(int cantidad, String codigo, int numeroVenta) {
 		try {
 
 			VO_DetalleVenta datosDetalleVenta = new VO_DetalleVenta(cantidad, codigo, numeroVenta);

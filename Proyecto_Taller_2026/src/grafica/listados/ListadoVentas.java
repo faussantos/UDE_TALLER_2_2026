@@ -26,26 +26,20 @@ public class ListadoVentas extends Ventana{
 	private DefaultTableModel modelo;
 	private ListadoVentasController _controller;
 
-	/**
-	 * Create the application.
-	 */
 	public ListadoVentas() {
 		super("Listado de Ventas");
 		_controller = new ListadoVentasController(this);
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		_frame.setBounds(100, 100, 722, 408);
 
-		JLabel lblNewLabel = new JLabel("Listado de Ventas");
-		lblNewLabel.setBounds(10, 10, 708, 19);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
-		_frame.getContentPane().add(lblNewLabel);
+		JLabel lblTitulo = new JLabel("Listado de Ventas");
+		lblTitulo.setBounds(10, 10, 708, 19);
+		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
+		_frame.getContentPane().add(lblTitulo);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 97, 688, 200);
@@ -78,10 +72,10 @@ public class ListadoVentas extends Ventana{
 		    }
 		});
 
-		JLabel lblNewLabel_1 = new JLabel("Mostrar:");
-		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 13));
-		lblNewLabel_1.setBounds(23, 56, 54, 17);
-		_frame.getContentPane().add(lblNewLabel_1);
+		JLabel lblMostrar = new JLabel("Mostrar:");
+		lblMostrar.setFont(new Font("Arial", Font.PLAIN, 13));
+		lblMostrar.setBounds(23, 56, 54, 17);
+		_frame.getContentPane().add(lblMostrar);
 
 		JRadioButton rdbtnTodas = new JRadioButton("Todas");
 		rdbtnTodas.setFont(new Font("Arial", Font.BOLD, 12));

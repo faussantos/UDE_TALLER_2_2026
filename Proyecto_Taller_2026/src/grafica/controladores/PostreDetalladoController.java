@@ -14,7 +14,7 @@ public class PostreDetalladoController extends Controller {
 		this.ventana = ven;
 	}
 
-	public VO_Postre PostreDetallado(String codigo) {
+	public VO_Postre postreDetallado(String codigo) {
 		
 		VO_CodigoPostre datosPostre = new VO_CodigoPostre(codigo);
 		VO_Postre detallePostre = null;

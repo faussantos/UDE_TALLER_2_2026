@@ -18,21 +18,15 @@ import javax.swing.JButton;
 
 public class PostreDetallado extends Ventana {
 
-	private JTextField textField;
+	private JTextField textFieldCodigoPostre;
 	private PostreDetalladoController _controller;
 
-	/**
-	 * Create the application.
-	 */
 	public PostreDetallado() {
 		super("Información detallada de postre");
 		this._controller = new PostreDetalladoController(this);
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		_frame.setBounds(100, 100, 489, 357);
 
@@ -41,15 +35,15 @@ public class PostreDetallado extends Ventana {
 		lblIngreseElCdigo.setBounds(10, 10, 378, 32);
 		_frame.getContentPane().add(lblIngreseElCdigo);
 
-		JLabel lblNewLabel_2_2 = new JLabel("Código:");
-		lblNewLabel_2_2.setFont(new Font("Arial", Font.PLAIN, 13));
-		lblNewLabel_2_2.setBounds(10, 66, 112, 16);
-		_frame.getContentPane().add(lblNewLabel_2_2);
+		JLabel lblCodigoPostre = new JLabel("Código:");
+		lblCodigoPostre.setFont(new Font("Arial", Font.PLAIN, 13));
+		lblCodigoPostre.setBounds(10, 66, 112, 16);
+		_frame.getContentPane().add(lblCodigoPostre);
 
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(132, 65, 178, 19);
-		_frame.getContentPane().add(textField);
+		textFieldCodigoPostre = new JTextField();
+		textFieldCodigoPostre.setColumns(10);
+		textFieldCodigoPostre.setBounds(132, 65, 178, 19);
+		_frame.getContentPane().add(textFieldCodigoPostre);
 
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.setBounds(225, 98, 85, 21);
@@ -145,14 +139,14 @@ public class PostreDetallado extends Ventana {
 
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String codigo = textField.getText();
+				String codigo = textFieldCodigoPostre.getText();
 
 				if (codigo.isEmpty()) {
 					mostrarError("Todos los campos son obligatorios.");
 					return;
 				}
 
-				VO_Postre datosPostre = _controller.PostreDetallado(codigo);
+				VO_Postre datosPostre = _controller.postreDetallado(codigo);
 
 				if (datosPostre != null) {
 					lblTituloResultado.setVisible(true);

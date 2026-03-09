@@ -26,26 +26,20 @@ public class ListadoDetallesEnVenta extends Ventana {
 	private ListadoDetallesEnVentaController _controller;
 	private DefaultTableModel modelo;
 
-	/**
-	 * Create the application.
-	 */
 	public ListadoDetallesEnVenta() {
 		super("Listado detalles en venta");
 		_controller = new ListadoDetallesEnVentaController(this);
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		_frame.setBounds(100, 100, 682, 408);
 
-		JLabel lblNewLabel = new JLabel("Listado de Detalles");
-		lblNewLabel.setBounds(10, 10, 648, 19);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
-		_frame.getContentPane().add(lblNewLabel);
+		JLabel lblTitulo = new JLabel("Listado de Detalles");
+		lblTitulo.setBounds(10, 10, 648, 19);
+		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
+		_frame.getContentPane().add(lblTitulo);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(33, 85, 593, 200);
@@ -73,10 +67,10 @@ public class ListadoDetallesEnVenta extends Ventana {
 			}
 		});
 
-		JLabel lblNewLabel_1 = new JLabel("Ingrese número de venta: ");
-		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 13));
-		lblNewLabel_1.setBounds(23, 56, 157, 17);
-		_frame.getContentPane().add(lblNewLabel_1);
+		JLabel lblIngreseNumeroVenta = new JLabel("Ingrese número de venta: ");
+		lblIngreseNumeroVenta.setFont(new Font("Arial", Font.PLAIN, 13));
+		lblIngreseNumeroVenta.setBounds(23, 56, 157, 17);
+		_frame.getContentPane().add(lblIngreseNumeroVenta);
 
 		ButtonGroup grupo = new ButtonGroup();
 
@@ -106,7 +100,7 @@ public class ListadoDetallesEnVenta extends Ventana {
 					return;
 				}
 
-				_controller.ListadoDetallesEnVenta(numeroVentaInt);
+				_controller.listadoDetallesEnVenta(numeroVentaInt);
 			}
 		});
 

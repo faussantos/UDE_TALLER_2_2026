@@ -1,10 +1,6 @@
 package grafica.controladores;
 
-import java.rmi.RemoteException;
-
 import grafica.listados.ListadoPostres;
-import grafica.registrar.NuevoPostre;
-import value_objects.VO_Postre;
 
 public class ListadoPostresController extends Controller {
 
@@ -15,10 +11,10 @@ public class ListadoPostresController extends Controller {
 		this.ventana = ven;
 	}
 
-	public void ListadoPostres() {
+	public void listadoPostres() {
 
 		try {
-			ventana.mostrarPostres(capaLogica.ListadoPostres());
+			ventana.mostrarPostres(capaLogica.listadoPostres());
 
 		} catch (Exception e) {
             ventana.mostrarError("Ha ocurrido un error inesperado: " + e.getMessage());

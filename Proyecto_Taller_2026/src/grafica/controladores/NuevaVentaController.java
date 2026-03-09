@@ -14,7 +14,7 @@ public class NuevaVentaController extends Controller {
 
 	}
 
-	public void NuevaVenta(LocalDate fecha, String direccion) {
+	public void nuevaVenta(LocalDate fecha, String direccion) {
 		try {
 			VO_VentaBasico datosVenta = new VO_VentaBasico(fecha, direccion);
 			int numeroVenta = capaLogica.inicioVenta(datosVenta);

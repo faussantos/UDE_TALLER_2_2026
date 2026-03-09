@@ -18,7 +18,7 @@ public class RecaudacionPostreFechaController extends Controller {
 		ventana = ven;
 	}
 
-	public VO_CantidadMonto RecaudacionPostreFecha(String codigo, LocalDate fecha) {
+	public VO_CantidadMonto recaudacionPostreFecha(String codigo, LocalDate fecha) {
 		
 		VO_PostreFecha datosPostreFecha = new VO_PostreFecha(codigo, fecha);
 		VO_CantidadMonto datosCantidadMonto = null;
