@@ -123,7 +123,8 @@ public class Venta implements Serializable {
 		int i = 0;
 		for (DetalleVenta detalle : detalles) {
 			Postre p = detalle.getPostre();
-			arre[i] = new VO_PostreCantidad(p.getCodigo(), p.getNombre(), p.getPrecio(), detalle.getCantidad());
+			arre[i] = new VO_PostreCantidad(p.getCodigo(), p.getNombre(), p.getPrecio(), detalle.getCantidad(),
+					p.getTipo());
 			i++;
 		}
 		return arre;

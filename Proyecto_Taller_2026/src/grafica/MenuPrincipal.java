@@ -19,11 +19,12 @@ public class MenuPrincipal extends Ventana{
 	ArchivosController _controller = new ArchivosController(this);
 
 	public MenuPrincipal() {
-		super("Menú");
+		super("Sugar");
 		initialize();
 	}
 
 	private void initialize() {
+        _controller.recuperarDatos();
 		_frame.setBounds(100, 100, 450, 300);
 		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -46,6 +47,7 @@ public class MenuPrincipal extends Ventana{
 		itemAbrir.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		        _controller.recuperarDatos();
+	            mostrarExito("Datos recuperados correctamente.");
 		    }
 		});
 		menuArchivo.add(itemAbrir);

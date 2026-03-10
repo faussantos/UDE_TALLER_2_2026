@@ -1,6 +1,5 @@
 package grafica.listados;
 
-
 import javax.swing.table.DefaultTableModel;
 
 import grafica.Ventana;
@@ -20,7 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JRadioButton;
 
-public class ListadoVentas extends Ventana{
+public class ListadoVentas extends Ventana {
 
 	private JTable table;
 	private DefaultTableModel modelo;
@@ -47,10 +46,10 @@ public class ListadoVentas extends Ventana{
 
 		String[] columnas = { "Número", "Fecha", "Dirección", "Monto", "Estado" };
 		modelo = new DefaultTableModel(columnas, 0) {
-			    @Override
-			    public boolean isCellEditable(int row, int column) {
-			        return false;
-			    }
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
 		};
 		table = new JTable(modelo);
 		table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 12));
@@ -67,9 +66,9 @@ public class ListadoVentas extends Ventana{
 		btnCerrar.setBounds(603, 337, 95, 21);
 		_frame.getContentPane().add(btnCerrar);
 		btnCerrar.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		    	_frame.dispose();
-		    }
+			public void actionPerformed(ActionEvent e) {
+				_frame.dispose();
+			}
 		});
 
 		JLabel lblMostrar = new JLabel("Mostrar:");
@@ -113,7 +112,7 @@ public class ListadoVentas extends Ventana{
 		});
 		btnBuscar.setBounds(371, 54, 95, 21);
 		_frame.getContentPane().add(btnBuscar);
-		
+
 		_frame.setVisible(true);
 
 	}
@@ -129,5 +128,6 @@ public class ListadoVentas extends Ventana{
 			}
 			modelo.addRow(new Object[] { v.getNumero(), v.getFecha(), v.getDireccion(), v.getMonto(), estado });
 		}
+
 	}
 }

@@ -99,7 +99,7 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica {
 		monitor.comienzoEscritura();
 
 		Venta ultimaVenta = secVentas.getUltimaVenta();
-		if (ultimaVenta != null && ultimaVenta.getFecha().isBefore(datosVenta.getFecha())) {
+		if (ultimaVenta != null && datosVenta.getFecha().isBefore(ultimaVenta.getFecha())){
 			monitor.terminoEscritura();
 			throw new FechaMayorUltimaVentaException(
 					"La fecha de la nueva venta no puede ser menor que la de la última venta registrada");

@@ -26,7 +26,6 @@ public class ArchivosController extends Controller {
     public void recuperarDatos() {
         try {
             capaLogica.recuperarDatos();
-            ventana.mostrarExito("Datos recuperados correctamente.");
         } catch (PersistenciaException e) {
             ventana.mostrarError("Error al recuperar los datos: " + e.darMensaje());
         } catch (ClassNotFoundException e) {

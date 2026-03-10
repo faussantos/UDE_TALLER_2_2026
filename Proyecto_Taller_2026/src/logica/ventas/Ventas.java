@@ -85,7 +85,11 @@ public class Ventas implements Serializable {
 				i++;
 			}
 		}
-		return arre;
+		VO_VentaCompleto[] resultado = new VO_VentaCompleto[i];
+	    for (int j = 0; j < i; j++) {
+	        resultado[j] = arre[j];
+	    }
+	    return resultado;
 	}
 
 	public VO_VentaCompleto[] listarVentasEnFinalizadas() {
@@ -98,7 +102,12 @@ public class Ventas implements Serializable {
 				i++;
 			}
 		}
-		return arre;
+
+		VO_VentaCompleto[] resultado = new VO_VentaCompleto[i];
+	    for (int j = 0; j < i; j++) {
+	        resultado[j] = arre[j];
+	    }
+	    return resultado;
 	}
 
 	public void borrar(int numeroVenta) {
@@ -112,14 +121,13 @@ public class Ventas implements Serializable {
 
 		if (!ventas.isEmpty()) {
 			for (Venta venta : ventas) {
-				if (venta.getFecha().isAfter(datos.getFecha())) {
-					break;
-				}
+				if (venta.getFecha().isEqual(datos.getFecha())) {
 
-				if (venta.existeDetalle(datos.getCodigo())) {
-					DetalleVenta detalleBuscado = venta.getDetalle(datos.getCodigo());
-					cantidad += detalleBuscado.getCantidad();
-					monto += detalleBuscado.getPostre().getPrecio() * detalleBuscado.getCantidad();
+					if (venta.existeDetalle(datos.getCodigo())) {
+						DetalleVenta detalleBuscado = venta.getDetalle(datos.getCodigo());
+						cantidad += detalleBuscado.getCantidad();
+						monto += detalleBuscado.getPostre().getPrecio() * detalleBuscado.getCantidad();
+					}
 				}
 			}
 		}
@@ -129,3 +137,4 @@ public class Ventas implements Serializable {
 		return cantidadMontoVO;
 	}
 }
+	
