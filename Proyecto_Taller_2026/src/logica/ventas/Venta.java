@@ -130,10 +130,6 @@ public class Venta implements Serializable {
 		return arre;
 	}
 
-	public VO_CantidadMonto totalMontoPostreYFecha() {
-		return null;
-	}
-
 	public double totalMontoDetalles() {
 		double monto = 0;
 		for (DetalleVenta detalle : detalles) {
