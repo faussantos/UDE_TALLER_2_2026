@@ -94,7 +94,7 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica {
 		return datosDevolver;
 	}
 
-	public int inicioVenta(VO_VentaBasico datosVenta) throws FechaMayorUltimaVentaException, InterruptedException {
+	public VO_NumeroVenta inicioVenta(VO_VentaBasico datosVenta) throws FechaMayorUltimaVentaException, InterruptedException {
 
 		monitor.comienzoEscritura();
 
@@ -117,8 +117,9 @@ public class CapaLogica extends UnicastRemoteObject implements ICapaLogica {
 		}
 
 		secVentas.insBack(nuevaVenta);
+		VO_NumeroVenta resultado = new VO_NumeroVenta(numeroVenta);
 		monitor.terminoEscritura();
-		return numeroVenta;
+		return resultado;
 	}
 
 	public void agregarPostreEnVenta(VO_DetalleVenta datosDetalle)
